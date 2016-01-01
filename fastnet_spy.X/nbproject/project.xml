@@ -3,7 +3,7 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>fastnet_reader</name>
+            <name>fastnet_spy</name>
             <creation-uuid>e07461e0-713c-45ee-bd93-c1ddca5acc2c</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions/>

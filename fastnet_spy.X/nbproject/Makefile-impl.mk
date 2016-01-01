@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=fastnet_reader.X
+PROJECTNAME=fastnet_spy.X
 
 # Active Configuration
 DEFAULTCONF=default

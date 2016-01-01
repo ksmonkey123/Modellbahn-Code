@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=specials.asm network_receive.asm network_send.asm random.asm led.asm expansion_read.asm expansion_write.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm fastnet_sender.asm fastnet_receiver.asm
+SOURCEFILES_QUOTED_IF_SPACED=specials.asm random.asm led.asm expansion_read.asm expansion_write.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm fastnet_sender.asm fastnet_receiver.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/specials.o ${OBJECTDIR}/network_receive.o ${OBJECTDIR}/network_send.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/expansion_read.o ${OBJECTDIR}/expansion_write.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/fastnet_sender.o ${OBJECTDIR}/fastnet_receiver.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/specials.o.d ${OBJECTDIR}/network_receive.o.d ${OBJECTDIR}/network_send.o.d ${OBJECTDIR}/random.o.d ${OBJECTDIR}/led.o.d ${OBJECTDIR}/expansion_read.o.d ${OBJECTDIR}/expansion_write.o.d ${OBJECTDIR}/global_ram.o.d ${OBJECTDIR}/delay.o.d ${OBJECTDIR}/count_ones.o.d ${OBJECTDIR}/binary_logarithm.o.d ${OBJECTDIR}/pow2.o.d ${OBJECTDIR}/fastnet_sender.o.d ${OBJECTDIR}/fastnet_receiver.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/expansion_read.o ${OBJECTDIR}/expansion_write.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/fastnet_sender.o ${OBJECTDIR}/fastnet_receiver.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/specials.o.d ${OBJECTDIR}/random.o.d ${OBJECTDIR}/led.o.d ${OBJECTDIR}/expansion_read.o.d ${OBJECTDIR}/expansion_write.o.d ${OBJECTDIR}/global_ram.o.d ${OBJECTDIR}/delay.o.d ${OBJECTDIR}/count_ones.o.d ${OBJECTDIR}/binary_logarithm.o.d ${OBJECTDIR}/pow2.o.d ${OBJECTDIR}/fastnet_sender.o.d ${OBJECTDIR}/fastnet_receiver.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/specials.o ${OBJECTDIR}/network_receive.o ${OBJECTDIR}/network_send.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/expansion_read.o ${OBJECTDIR}/expansion_write.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/fastnet_sender.o ${OBJECTDIR}/fastnet_receiver.o
+OBJECTFILES=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/expansion_read.o ${OBJECTDIR}/expansion_write.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/fastnet_sender.o ${OBJECTDIR}/fastnet_receiver.o
 
 # Source Files
-SOURCEFILES=specials.asm network_receive.asm network_send.asm random.asm led.asm expansion_read.asm expansion_write.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm fastnet_sender.asm fastnet_receiver.asm
+SOURCEFILES=specials.asm random.asm led.asm expansion_read.asm expansion_write.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm fastnet_sender.asm fastnet_receiver.asm
 
 
 CFLAGS=
@@ -89,22 +89,6 @@ ${OBJECTDIR}/specials.o: specials.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/specials.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/specials.lst\\\" -e\\\"${OBJECTDIR}/specials.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/specials.o\\\" \\\"specials.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/specials.o"
 	@${FIXDEPS} "${OBJECTDIR}/specials.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/network_receive.o: network_receive.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/network_receive.o.d 
-	@${RM} ${OBJECTDIR}/network_receive.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/network_receive.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/network_receive.lst\\\" -e\\\"${OBJECTDIR}/network_receive.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/network_receive.o\\\" \\\"network_receive.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/network_receive.o"
-	@${FIXDEPS} "${OBJECTDIR}/network_receive.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/network_send.o: network_send.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/network_send.o.d 
-	@${RM} ${OBJECTDIR}/network_send.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/network_send.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/network_send.lst\\\" -e\\\"${OBJECTDIR}/network_send.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/network_send.o\\\" \\\"network_send.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/network_send.o"
-	@${FIXDEPS} "${OBJECTDIR}/network_send.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 ${OBJECTDIR}/random.o: random.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -202,22 +186,6 @@ ${OBJECTDIR}/specials.o: specials.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/specials.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/specials.lst\\\" -e\\\"${OBJECTDIR}/specials.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/specials.o\\\" \\\"specials.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/specials.o"
 	@${FIXDEPS} "${OBJECTDIR}/specials.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/network_receive.o: network_receive.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/network_receive.o.d 
-	@${RM} ${OBJECTDIR}/network_receive.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/network_receive.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/network_receive.lst\\\" -e\\\"${OBJECTDIR}/network_receive.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/network_receive.o\\\" \\\"network_receive.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/network_receive.o"
-	@${FIXDEPS} "${OBJECTDIR}/network_receive.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/network_send.o: network_send.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/network_send.o.d 
-	@${RM} ${OBJECTDIR}/network_send.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/network_send.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/network_send.lst\\\" -e\\\"${OBJECTDIR}/network_send.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/network_send.o\\\" \\\"network_send.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/network_send.o"
-	@${FIXDEPS} "${OBJECTDIR}/network_send.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 ${OBJECTDIR}/random.o: random.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 

@@ -13,8 +13,6 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>specials.asm</itemPath>
-      <itemPath>network_receive.asm</itemPath>
-      <itemPath>network_send.asm</itemPath>
       <itemPath>random.asm</itemPath>
       <itemPath>led.asm</itemPath>
       <itemPath>expansion_read.asm</itemPath>

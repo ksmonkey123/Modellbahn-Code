@@ -155,7 +155,7 @@ resolve:
     retlw   b'0010' ;DK	1110
     retlw   b'0010' ;EK	1111
 ;####################################################
-;# MAIN CODE VECTOR				    #
+;# MAIN CODE VECTOR				#
 MAIN_PROG   CODE
 ; STARTUP CODE
 start:
