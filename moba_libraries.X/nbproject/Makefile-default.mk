@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=specials.asm random.asm led.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm portc_manager.asm portb_manager.asm serial.in.asm serial.out.asm expansion.in.asm expansion.out.asm
+SOURCEFILES_QUOTED_IF_SPACED=specials.asm random.asm led.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm portc_manager.asm portb_manager.asm serial.in.asm serial.out.asm expansion.in.asm expansion.out.asm switch_controlling.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/portc_manager.o ${OBJECTDIR}/portb_manager.o ${OBJECTDIR}/serial.in.o ${OBJECTDIR}/serial.out.o ${OBJECTDIR}/expansion.in.o ${OBJECTDIR}/expansion.out.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/specials.o.d ${OBJECTDIR}/random.o.d ${OBJECTDIR}/led.o.d ${OBJECTDIR}/global_ram.o.d ${OBJECTDIR}/delay.o.d ${OBJECTDIR}/count_ones.o.d ${OBJECTDIR}/binary_logarithm.o.d ${OBJECTDIR}/pow2.o.d ${OBJECTDIR}/portc_manager.o.d ${OBJECTDIR}/portb_manager.o.d ${OBJECTDIR}/serial.in.o.d ${OBJECTDIR}/serial.out.o.d ${OBJECTDIR}/expansion.in.o.d ${OBJECTDIR}/expansion.out.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/portc_manager.o ${OBJECTDIR}/portb_manager.o ${OBJECTDIR}/serial.in.o ${OBJECTDIR}/serial.out.o ${OBJECTDIR}/expansion.in.o ${OBJECTDIR}/expansion.out.o ${OBJECTDIR}/switch_controlling.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/specials.o.d ${OBJECTDIR}/random.o.d ${OBJECTDIR}/led.o.d ${OBJECTDIR}/global_ram.o.d ${OBJECTDIR}/delay.o.d ${OBJECTDIR}/count_ones.o.d ${OBJECTDIR}/binary_logarithm.o.d ${OBJECTDIR}/pow2.o.d ${OBJECTDIR}/portc_manager.o.d ${OBJECTDIR}/portb_manager.o.d ${OBJECTDIR}/serial.in.o.d ${OBJECTDIR}/serial.out.o.d ${OBJECTDIR}/expansion.in.o.d ${OBJECTDIR}/expansion.out.o.d ${OBJECTDIR}/switch_controlling.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/portc_manager.o ${OBJECTDIR}/portb_manager.o ${OBJECTDIR}/serial.in.o ${OBJECTDIR}/serial.out.o ${OBJECTDIR}/expansion.in.o ${OBJECTDIR}/expansion.out.o
+OBJECTFILES=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/portc_manager.o ${OBJECTDIR}/portb_manager.o ${OBJECTDIR}/serial.in.o ${OBJECTDIR}/serial.out.o ${OBJECTDIR}/expansion.in.o ${OBJECTDIR}/expansion.out.o ${OBJECTDIR}/switch_controlling.o
 
 # Source Files
-SOURCEFILES=specials.asm random.asm led.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm portc_manager.asm portb_manager.asm serial.in.asm serial.out.asm expansion.in.asm expansion.out.asm
+SOURCEFILES=specials.asm random.asm led.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm portc_manager.asm portb_manager.asm serial.in.asm serial.out.asm expansion.in.asm expansion.out.asm switch_controlling.asm
 
 
 CFLAGS=
@@ -194,6 +194,14 @@ ${OBJECTDIR}/expansion.out.o: expansion.out.asm  nbproject/Makefile-${CND_CONF}.
 	@${DEP_GEN} -d "${OBJECTDIR}/expansion.out.o"
 	@${FIXDEPS} "${OBJECTDIR}/expansion.out.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
+${OBJECTDIR}/switch_controlling.o: switch_controlling.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/switch_controlling.o.d 
+	@${RM} ${OBJECTDIR}/switch_controlling.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/switch_controlling.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/switch_controlling.lst\\\" -e\\\"${OBJECTDIR}/switch_controlling.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/switch_controlling.o\\\" \\\"switch_controlling.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/switch_controlling.o"
+	@${FIXDEPS} "${OBJECTDIR}/switch_controlling.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 else
 ${OBJECTDIR}/specials.o: specials.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -306,6 +314,14 @@ ${OBJECTDIR}/expansion.out.o: expansion.out.asm  nbproject/Makefile-${CND_CONF}.
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/expansion.out.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/expansion.out.lst\\\" -e\\\"${OBJECTDIR}/expansion.out.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/expansion.out.o\\\" \\\"expansion.out.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/expansion.out.o"
 	@${FIXDEPS} "${OBJECTDIR}/expansion.out.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/switch_controlling.o: switch_controlling.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/switch_controlling.o.d 
+	@${RM} ${OBJECTDIR}/switch_controlling.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/switch_controlling.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/switch_controlling.lst\\\" -e\\\"${OBJECTDIR}/switch_controlling.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/switch_controlling.o\\\" \\\"switch_controlling.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/switch_controlling.o"
+	@${FIXDEPS} "${OBJECTDIR}/switch_controlling.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 

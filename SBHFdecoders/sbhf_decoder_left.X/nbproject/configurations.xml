@@ -12,21 +12,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>specials.asm</itemPath>
-      <itemPath>random.asm</itemPath>
-      <itemPath>led.asm</itemPath>
-      <itemPath>global_ram.asm</itemPath>
-      <itemPath>delay.asm</itemPath>
-      <itemPath>count_ones.asm</itemPath>
-      <itemPath>binary_logarithm.asm</itemPath>
-      <itemPath>pow2.asm</itemPath>
-      <itemPath>portc_manager.asm</itemPath>
-      <itemPath>portb_manager.asm</itemPath>
-      <itemPath>serial.in.asm</itemPath>
-      <itemPath>serial.out.asm</itemPath>
-      <itemPath>expansion.in.asm</itemPath>
-      <itemPath>expansion.out.asm</itemPath>
-      <itemPath>switch_controlling.asm</itemPath>
+      <itemPath>sbhf_decoder_left.asm</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -36,7 +22,7 @@
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="default" type="3">
+    <conf name="default" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>PIC16F527</targetDevice>
@@ -50,6 +36,23 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../../moba_libraries.X"
+                            CT="3"
+                            CN="default"
+                            AC="true"
+                            BL="true"
+                            WD="../../moba_libraries.X"
+                            BC="${MAKE}  -f Makefile CONF=default"
+                            DBC="${MAKE}  -f Makefile CONF=default TYPE_IMAGE=DEBUG_RUN"
+                            CC="rm -rf &quot;build/default&quot; &quot;dist/default&quot;"
+                            OP="dist/default/production/moba_libraries.X.lib"
+                            DOP="dist/default/debug/moba_libraries.X.lib"
+                            FL="dist/default/production/moba_libraries.X.lib"
+                            PD="dist/default/production/moba_libraries.X."
+                            DD="dist/default/debug/moba_libraries.X.">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>
@@ -69,14 +72,12 @@
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
-      <MPASMWIN-AS>
-        <property key="cross.reference.file" value=""/>
-        <property key="default.radix" value="HEX"/>
-        <property key="enable.case.sensitivity" value="true"/>
-        <property key="hex.output.format" value="INHX32"/>
-        <property key="preprocessor.macros" value=""/>
-        <property key="warning.level" value="0"/>
-      </MPASMWIN-AS>
+      <MPASMWIN-LD>
+        <property key="cod-file" value="false"/>
+        <property key="extra-lib-directories" value=""/>
+        <property key="hex-output-format" value="INHX32"/>
+        <property key="map-file" value="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"/>
+      </MPASMWIN-LD>
       <mpasmsuite>
         <property key="absolute-mode" value="false"/>
         <property key="eeprom-width" value="8"/>
