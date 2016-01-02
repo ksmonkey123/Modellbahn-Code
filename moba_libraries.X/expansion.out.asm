@@ -1,51 +1,51 @@
 ; #############################################
 ; # WRITE FUNCTION FOR EXPANSION HEADER REV A #
 ; #############################################
-; # VERSION				      #
-; #   1.0.0 (2015-12-13)		      #
+; # VERSION                                   #
+; #   1.0.0 (2015-12-13)		              #
 ; #############################################
-; # TARGET HARDWARE			      #
-; #   - PIC16F527			      #
-; #   - MasterBoard Rev. A		      #
-; #   - ExpansionHeader Rev. A		      #
+; # TARGET HARDWARE			                  #
+; #   - PIC16F527			                  #
+; #   - MasterBoard Rev. A		              #
+; #   - ExpansionHeader Rev. A		          #
 ; #############################################
-; # EXPORTED LABELS			      #
+; # EXPORTED LABELS			                  #
 ; #   expansion.write (main function)	      #
 ; #     writes a 16-bit value to the output   #
-; #	section of the expansion header	      #
-; #   expansion.write.load_tris		      #
+; #	section of the expansion header	          #
+; #   expansion.write.load_tris		          #
 ; #     returns the tris configuration needed #
-; #     for operation.			      #
+; #     for operation.			              #
 ; #############################################
-; # DESCRIPTION 			      #
+; # DESCRIPTION 			                  #
 ; #   This function handles communication     #
 ; #   with the output section of the	      #
-; #   expansion header (RB4-RB6).	      #
+; #   expansion header (RB4-RB6).	          #
 ; #############################################
-; # I/O CONSIDERATIONS 			      #
+; # I/O CONSIDERATIONS 			              #
 ; #   This function assumes RB4, RB5 and RB6  #
-; #   to be configured as outputs.	      #
+; #   to be configured as outputs.	          #
 ; #   RB7 is not affected aside from the      #
-; #   usual bsf/bcf side-effects.	      #
+; #   usual bsf/bcf side-effects.	          #
 ; #############################################
-; # MEMORY CONSIDERATIONS		      #
+; # MEMORY CONSIDERATIONS		              #
 ; #   This function requires 4 bytes of RAM.  #
 ; #   bank-shared memory will not be modified #
 ; #   bank- and page-handling is included.    #
 ; #############################################
-; # FUNCTION CALL / RETURN CONTRACT	      #
+; # FUNCTION CALL / RETURN CONTRACT	          #
 ; #   This function assumes FSR to contain    #
 ; #   the adress for the first byte of data.  #
 ; #   The value pointed to by FSR will be     #
 ; #   written to L0-L7, and the subsequent    #
-; #   value to L8-15.			      #
+; #   value to L8-15.			              #
 ; #############################################
-; # CHANGELOG				      #
-; #   1.0.0 - initial release		      #
+; # CHANGELOG				                  #
+; #   1.0.0 - initial release		          #
 ; #############################################
     #include <p16f527.inc>
-    global  expansion.write
-    global  expansion.write.load_tris
+    global  expansion.out
+    global  expansion.out.init
 
     #define dat	    RB4
     #define clock   RB5
@@ -62,14 +62,24 @@ expansion.write.source_pointer	res 1
     #define value_high	    expansion.write.value_high
     #define source_pointer  expansion.write.source_pointer
 
-EXPANSION_WRITE_VECTOR CODE
-expansion.write.load_tris:
-    retlw   0x8F
+    extern  portb.tris.unset
+    extern  portb.tris.flush
+    extern  portb.data.unset
+    extern  portb.data.flush
 
-expansion.write:
+EXPANSION_WRITE_VECTOR CODE
+expansion.out.init:
+    movlw   b'01110000'
+    lcall   portb.data.unset
+    lcall   portb.data.flush
+    movlw   b'01110000'
+    lcall   portb.tris.unset
+    lcall   portb.tris.flush
+    return
+expansion.out:
     ; read values into own memory
     banksel value_low
-    pagesel expansion.write
+    pagesel expansion.out
     movfw   INDF
     movwf   value_low
     incf    FSR, F

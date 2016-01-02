@@ -15,15 +15,17 @@
       <itemPath>specials.asm</itemPath>
       <itemPath>random.asm</itemPath>
       <itemPath>led.asm</itemPath>
-      <itemPath>expansion_read.asm</itemPath>
-      <itemPath>expansion_write.asm</itemPath>
       <itemPath>global_ram.asm</itemPath>
       <itemPath>delay.asm</itemPath>
       <itemPath>count_ones.asm</itemPath>
       <itemPath>binary_logarithm.asm</itemPath>
       <itemPath>pow2.asm</itemPath>
-      <itemPath>fastnet_sender.asm</itemPath>
-      <itemPath>fastnet_receiver.asm</itemPath>
+      <itemPath>portc_manager.asm</itemPath>
+      <itemPath>portb_manager.asm</itemPath>
+      <itemPath>serial.in.asm</itemPath>
+      <itemPath>serial.out.asm</itemPath>
+      <itemPath>expansion.in.asm</itemPath>
+      <itemPath>expansion.out.asm</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

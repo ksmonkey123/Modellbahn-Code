@@ -3,6 +3,8 @@
     extern  _global_0
     extern  _global_1
     extern  _global_2
+    extern  portb.tris.set
+    extern  portb.tris.flush
 
     #define index   _global_0
     #define packet  _global_1
@@ -10,13 +12,16 @@
     #define in_prt  PORTB
     #define in      PORTB, RB7
 
-    global  fastnet.receive
-    global  fastnet.receive.load_tris
+    global  serial.in
+    global  serial.in.init
 
-FASTNET_RECEIVER_VECTOR code
-fastnet.receive.load_tris:
-    retlw   0xFF
-fastnet.receive:
+SERIAL_IN_VECTOR code
+serial.in.init:
+    movlw   b'10000000'
+    lcall   portb.tris.set
+    lcall   portb.tris.flush
+    return
+serial.in:
     banksel in_prt
     pagesel read
 read:

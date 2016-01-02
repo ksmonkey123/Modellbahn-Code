@@ -14,12 +14,12 @@ IRUPT_VECTOR    code    0x004
 ;</editor-fold>
 
 ;<editor-fold defaultstate="collapsed" desc="library imports">
-    extern  expansion.read
-    extern  expansion.write
-    extern  expansion.read.load_tris
-    extern  fastnet.send
+    extern  expansion.in, expansion.in.init
+    extern  expansion.out, expansion.out.init
+    extern  serial.out, serial.out.init
     extern  deactivate_specials
     extern  led.on, led.off, led.init
+    extern  portb.init
 ;</editor-fold>
 
 ;<editor-fold defaultstate="collapsed" desc="ram allocation">
@@ -91,17 +91,12 @@ PROGRAM_VECTOR  code    0x100
 ; ======================= START OF MAIN PROGRAM =======================
 ; -------------- processor setup and i/o initialisation ---------------
 start:
-    call   deactivate_specials
-    banksel PORTB
-    movlw   0x80
-    movwf   PORTB
-    movlw   0x0f
-    tris    PORTB
-    movlw   0x80
-    movwf   PORTB
-    call    expansion.read.load_tris
-    tris    PORTC
-    call    led.init
+    lcall    deactivate_specials
+    lcall    portb.init
+    lcall    serial.out.init
+    lcall    expansion.out.init
+    lcall    expansion.in.init
+    lcall    led.init
     banksel command
     clrf    command
     clrf    buttons + 0
@@ -110,15 +105,15 @@ start:
     clrf    led_states + 1
     movlw   led_states
     movwf   FSR
-    call    expansion.write
+    lcall    expansion.out
 ; ------------------------- main program loop -------------------------
 main:
     ; READ INPUT
     movlw   buttons
     movwf   FSR
-    call    expansion.read
+    lcall    expansion.in
     ; PROCESS INPUT
-    call    search_command
+    lcall    search_command
     ; COMMIT CHANGES
     banksel new_command
     movfw   new_command
@@ -134,12 +129,12 @@ main:
 main_publish:
     movlw   led_states
     movwf   FSR
-    call    expansion.write
+    lcall    expansion.out
     movlw   command
     movwf   FSR
-    call    fastnet.send
+    lcall    serial.out
     ; REPEAT
-    goto    main
+    lgoto    main
 
 ; ======================== END OF MAIN PROGRAM ========================
     fill    (xorlw 0xff), (0x200 - $) ; keep libs out of second quarter

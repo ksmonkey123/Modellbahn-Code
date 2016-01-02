@@ -21,7 +21,8 @@ IRUPT_VECTOR    code    0x004
 ;</editor-fold>
 
 ;<editor-fold defaultstate="collapsed" desc="library imports">
-    extern  fastnet.receive
+    extern  serial.in, serial.in.init
+    extern  portb.init
     extern  deactivate_specials
 ;</editor-fold>
 
@@ -35,10 +36,9 @@ PROGRAM_VECTOR  code    0x100
 ; ----------------------- device setup ----------------------
 start:
     lcall   deactivate_specials
+    lcall   portb.init
+    lcall   serial.in.init
     banksel 0
-    movlw   0xff
-    tris    PORTB
-    clrf    PORTB
     movlw   0x00
     tris    PORTC
     clrf    PORTC
@@ -48,7 +48,7 @@ start:
     movwf   FSR
 ; ------------------- main execution loop -------------------
 main:
-    lcall   fastnet.receive
+    lcall   serial.in
     banksel 0
     movfw   INDF
     movwf   PORTC

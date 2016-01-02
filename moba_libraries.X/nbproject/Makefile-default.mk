@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=specials.asm random.asm led.asm expansion_read.asm expansion_write.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm fastnet_sender.asm fastnet_receiver.asm
+SOURCEFILES_QUOTED_IF_SPACED=specials.asm random.asm led.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm portc_manager.asm portb_manager.asm serial.in.asm serial.out.asm expansion.in.asm expansion.out.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/expansion_read.o ${OBJECTDIR}/expansion_write.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/fastnet_sender.o ${OBJECTDIR}/fastnet_receiver.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/specials.o.d ${OBJECTDIR}/random.o.d ${OBJECTDIR}/led.o.d ${OBJECTDIR}/expansion_read.o.d ${OBJECTDIR}/expansion_write.o.d ${OBJECTDIR}/global_ram.o.d ${OBJECTDIR}/delay.o.d ${OBJECTDIR}/count_ones.o.d ${OBJECTDIR}/binary_logarithm.o.d ${OBJECTDIR}/pow2.o.d ${OBJECTDIR}/fastnet_sender.o.d ${OBJECTDIR}/fastnet_receiver.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/portc_manager.o ${OBJECTDIR}/portb_manager.o ${OBJECTDIR}/serial.in.o ${OBJECTDIR}/serial.out.o ${OBJECTDIR}/expansion.in.o ${OBJECTDIR}/expansion.out.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/specials.o.d ${OBJECTDIR}/random.o.d ${OBJECTDIR}/led.o.d ${OBJECTDIR}/global_ram.o.d ${OBJECTDIR}/delay.o.d ${OBJECTDIR}/count_ones.o.d ${OBJECTDIR}/binary_logarithm.o.d ${OBJECTDIR}/pow2.o.d ${OBJECTDIR}/portc_manager.o.d ${OBJECTDIR}/portb_manager.o.d ${OBJECTDIR}/serial.in.o.d ${OBJECTDIR}/serial.out.o.d ${OBJECTDIR}/expansion.in.o.d ${OBJECTDIR}/expansion.out.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/expansion_read.o ${OBJECTDIR}/expansion_write.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/fastnet_sender.o ${OBJECTDIR}/fastnet_receiver.o
+OBJECTFILES=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/portc_manager.o ${OBJECTDIR}/portb_manager.o ${OBJECTDIR}/serial.in.o ${OBJECTDIR}/serial.out.o ${OBJECTDIR}/expansion.in.o ${OBJECTDIR}/expansion.out.o
 
 # Source Files
-SOURCEFILES=specials.asm random.asm led.asm expansion_read.asm expansion_write.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm fastnet_sender.asm fastnet_receiver.asm
+SOURCEFILES=specials.asm random.asm led.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm portc_manager.asm portb_manager.asm serial.in.asm serial.out.asm expansion.in.asm expansion.out.asm
 
 
 CFLAGS=
@@ -106,22 +106,6 @@ ${OBJECTDIR}/led.o: led.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/led.o"
 	@${FIXDEPS} "${OBJECTDIR}/led.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
-${OBJECTDIR}/expansion_read.o: expansion_read.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/expansion_read.o.d 
-	@${RM} ${OBJECTDIR}/expansion_read.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/expansion_read.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/expansion_read.lst\\\" -e\\\"${OBJECTDIR}/expansion_read.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/expansion_read.o\\\" \\\"expansion_read.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/expansion_read.o"
-	@${FIXDEPS} "${OBJECTDIR}/expansion_read.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/expansion_write.o: expansion_write.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/expansion_write.o.d 
-	@${RM} ${OBJECTDIR}/expansion_write.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/expansion_write.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/expansion_write.lst\\\" -e\\\"${OBJECTDIR}/expansion_write.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/expansion_write.o\\\" \\\"expansion_write.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/expansion_write.o"
-	@${FIXDEPS} "${OBJECTDIR}/expansion_write.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
 ${OBJECTDIR}/global_ram.o: global_ram.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/global_ram.o.d 
@@ -162,21 +146,53 @@ ${OBJECTDIR}/pow2.o: pow2.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/pow2.o"
 	@${FIXDEPS} "${OBJECTDIR}/pow2.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
-${OBJECTDIR}/fastnet_sender.o: fastnet_sender.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/portc_manager.o: portc_manager.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/fastnet_sender.o.d 
-	@${RM} ${OBJECTDIR}/fastnet_sender.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/fastnet_sender.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/fastnet_sender.lst\\\" -e\\\"${OBJECTDIR}/fastnet_sender.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/fastnet_sender.o\\\" \\\"fastnet_sender.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/fastnet_sender.o"
-	@${FIXDEPS} "${OBJECTDIR}/fastnet_sender.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/portc_manager.o.d 
+	@${RM} ${OBJECTDIR}/portc_manager.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/portc_manager.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/portc_manager.lst\\\" -e\\\"${OBJECTDIR}/portc_manager.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/portc_manager.o\\\" \\\"portc_manager.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/portc_manager.o"
+	@${FIXDEPS} "${OBJECTDIR}/portc_manager.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
-${OBJECTDIR}/fastnet_receiver.o: fastnet_receiver.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/portb_manager.o: portb_manager.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/fastnet_receiver.o.d 
-	@${RM} ${OBJECTDIR}/fastnet_receiver.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/fastnet_receiver.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/fastnet_receiver.lst\\\" -e\\\"${OBJECTDIR}/fastnet_receiver.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/fastnet_receiver.o\\\" \\\"fastnet_receiver.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/fastnet_receiver.o"
-	@${FIXDEPS} "${OBJECTDIR}/fastnet_receiver.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/portb_manager.o.d 
+	@${RM} ${OBJECTDIR}/portb_manager.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/portb_manager.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/portb_manager.lst\\\" -e\\\"${OBJECTDIR}/portb_manager.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/portb_manager.o\\\" \\\"portb_manager.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/portb_manager.o"
+	@${FIXDEPS} "${OBJECTDIR}/portb_manager.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/serial.in.o: serial.in.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/serial.in.o.d 
+	@${RM} ${OBJECTDIR}/serial.in.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/serial.in.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/serial.in.lst\\\" -e\\\"${OBJECTDIR}/serial.in.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/serial.in.o\\\" \\\"serial.in.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/serial.in.o"
+	@${FIXDEPS} "${OBJECTDIR}/serial.in.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/serial.out.o: serial.out.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/serial.out.o.d 
+	@${RM} ${OBJECTDIR}/serial.out.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/serial.out.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/serial.out.lst\\\" -e\\\"${OBJECTDIR}/serial.out.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/serial.out.o\\\" \\\"serial.out.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/serial.out.o"
+	@${FIXDEPS} "${OBJECTDIR}/serial.out.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/expansion.in.o: expansion.in.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/expansion.in.o.d 
+	@${RM} ${OBJECTDIR}/expansion.in.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/expansion.in.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/expansion.in.lst\\\" -e\\\"${OBJECTDIR}/expansion.in.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/expansion.in.o\\\" \\\"expansion.in.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/expansion.in.o"
+	@${FIXDEPS} "${OBJECTDIR}/expansion.in.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/expansion.out.o: expansion.out.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/expansion.out.o.d 
+	@${RM} ${OBJECTDIR}/expansion.out.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/expansion.out.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/expansion.out.lst\\\" -e\\\"${OBJECTDIR}/expansion.out.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/expansion.out.o\\\" \\\"expansion.out.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/expansion.out.o"
+	@${FIXDEPS} "${OBJECTDIR}/expansion.out.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 else
 ${OBJECTDIR}/specials.o: specials.asm  nbproject/Makefile-${CND_CONF}.mk
@@ -202,22 +218,6 @@ ${OBJECTDIR}/led.o: led.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/led.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/led.lst\\\" -e\\\"${OBJECTDIR}/led.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/led.o\\\" \\\"led.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/led.o"
 	@${FIXDEPS} "${OBJECTDIR}/led.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/expansion_read.o: expansion_read.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/expansion_read.o.d 
-	@${RM} ${OBJECTDIR}/expansion_read.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/expansion_read.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/expansion_read.lst\\\" -e\\\"${OBJECTDIR}/expansion_read.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/expansion_read.o\\\" \\\"expansion_read.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/expansion_read.o"
-	@${FIXDEPS} "${OBJECTDIR}/expansion_read.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/expansion_write.o: expansion_write.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/expansion_write.o.d 
-	@${RM} ${OBJECTDIR}/expansion_write.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/expansion_write.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/expansion_write.lst\\\" -e\\\"${OBJECTDIR}/expansion_write.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/expansion_write.o\\\" \\\"expansion_write.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/expansion_write.o"
-	@${FIXDEPS} "${OBJECTDIR}/expansion_write.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 ${OBJECTDIR}/global_ram.o: global_ram.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -259,21 +259,53 @@ ${OBJECTDIR}/pow2.o: pow2.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/pow2.o"
 	@${FIXDEPS} "${OBJECTDIR}/pow2.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
-${OBJECTDIR}/fastnet_sender.o: fastnet_sender.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/portc_manager.o: portc_manager.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/fastnet_sender.o.d 
-	@${RM} ${OBJECTDIR}/fastnet_sender.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/fastnet_sender.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/fastnet_sender.lst\\\" -e\\\"${OBJECTDIR}/fastnet_sender.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/fastnet_sender.o\\\" \\\"fastnet_sender.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/fastnet_sender.o"
-	@${FIXDEPS} "${OBJECTDIR}/fastnet_sender.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/portc_manager.o.d 
+	@${RM} ${OBJECTDIR}/portc_manager.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/portc_manager.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/portc_manager.lst\\\" -e\\\"${OBJECTDIR}/portc_manager.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/portc_manager.o\\\" \\\"portc_manager.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/portc_manager.o"
+	@${FIXDEPS} "${OBJECTDIR}/portc_manager.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
-${OBJECTDIR}/fastnet_receiver.o: fastnet_receiver.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/portb_manager.o: portb_manager.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/fastnet_receiver.o.d 
-	@${RM} ${OBJECTDIR}/fastnet_receiver.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/fastnet_receiver.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/fastnet_receiver.lst\\\" -e\\\"${OBJECTDIR}/fastnet_receiver.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/fastnet_receiver.o\\\" \\\"fastnet_receiver.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/fastnet_receiver.o"
-	@${FIXDEPS} "${OBJECTDIR}/fastnet_receiver.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/portb_manager.o.d 
+	@${RM} ${OBJECTDIR}/portb_manager.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/portb_manager.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/portb_manager.lst\\\" -e\\\"${OBJECTDIR}/portb_manager.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/portb_manager.o\\\" \\\"portb_manager.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/portb_manager.o"
+	@${FIXDEPS} "${OBJECTDIR}/portb_manager.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/serial.in.o: serial.in.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/serial.in.o.d 
+	@${RM} ${OBJECTDIR}/serial.in.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/serial.in.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/serial.in.lst\\\" -e\\\"${OBJECTDIR}/serial.in.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/serial.in.o\\\" \\\"serial.in.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/serial.in.o"
+	@${FIXDEPS} "${OBJECTDIR}/serial.in.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/serial.out.o: serial.out.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/serial.out.o.d 
+	@${RM} ${OBJECTDIR}/serial.out.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/serial.out.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/serial.out.lst\\\" -e\\\"${OBJECTDIR}/serial.out.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/serial.out.o\\\" \\\"serial.out.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/serial.out.o"
+	@${FIXDEPS} "${OBJECTDIR}/serial.out.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/expansion.in.o: expansion.in.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/expansion.in.o.d 
+	@${RM} ${OBJECTDIR}/expansion.in.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/expansion.in.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/expansion.in.lst\\\" -e\\\"${OBJECTDIR}/expansion.in.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/expansion.in.o\\\" \\\"expansion.in.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/expansion.in.o"
+	@${FIXDEPS} "${OBJECTDIR}/expansion.in.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/expansion.out.o: expansion.out.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/expansion.out.o.d 
+	@${RM} ${OBJECTDIR}/expansion.out.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/expansion.out.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/expansion.out.lst\\\" -e\\\"${OBJECTDIR}/expansion.out.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/expansion.out.o\\\" \\\"expansion.out.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/expansion.out.o"
+	@${FIXDEPS} "${OBJECTDIR}/expansion.out.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 

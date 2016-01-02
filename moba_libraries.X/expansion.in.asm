@@ -49,8 +49,8 @@
 ; #   1.0.0 - initial release                 #
 ; #############################################
     #include <p16f527.inc>
-    global  expansion.read
-    global  expansion.read.load_tris
+    global  expansion.in
+    global  expansion.in.init
 
     #define a0	RA3
     #define a1	RA2
@@ -64,17 +64,25 @@ expansion.read.value_low  res 1
 expansion.read.value_high res 1
 expansion.read.target	  res 1
 
-    #define index	    expansion.read.index
+    #define index           expansion.read.index
     #define value_low	    expansion.read.value_low
     #define value_high	    expansion.read.value_high
     #define target_pointer  expansion.read.target
 
-EXPANSION_READ_VECTOR CODE
-expansion.read.load_tris:
-    retlw   0xF1
+    extern  portc.tris.set
+    extern  portc.tris.unset
+    extern  portc.tris.flush
 
-expansion.read:
-    pagesel expansion.read
+EXPANSION_READ_VECTOR CODE
+expansion.in.init:
+    movlw   b'00110000'
+    lcall   portc.tris.set
+    movlw   b'00001110'
+    lcall   portc.tris.unset
+    lcall   portc.tris.flush
+    return
+expansion.in:
+    pagesel expansion.in
     banksel target_pointer
     movfw   FSR
     movwf   target_pointer

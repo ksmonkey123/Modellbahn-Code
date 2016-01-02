@@ -1,12 +1,15 @@
     #include <p16f527.inc>
 
-    global  fastnet.send
-    global  fastnet.send.load_tris
-    global  fastnet.send.init
+    global  serial.out
+    global  serial.out.init
 
     extern  _global_0
     extern  _global_1
     extern  _global_2
+    extern  portb.tris.unset
+    extern  portb.tris.flush
+    extern  portb.data.set
+    extern  portb.data.flush
 
     #define packet  _global_0
     #define parity  _global_1
@@ -14,14 +17,16 @@
     #define out     PORTB, RB7
     #define out_prt PORTB
 
-FASTNET_VECTOR  code
-fastnet.send.load_tris:
-    retlw   0x7f
-fastnet.send.init:
-    banksel out_prt
-    bsf     out
+SERIAL_OUT_VECTOR  code
+serial.out.init:
+    movlw   b'10000000'         ; make sure a 1 is written
+    lcall   portb.data.set
+    lcall   portb.data.flush
+    movlw   b'10000000'         ; make sure the pin is output
+    lcall   portb.tris.unset
+    lcall   portb.tris.flush
     return
-fastnet.send:
+serial.out:
     banksel out_prt
     bcf     out         ; > 0 (start RESET)
     movfw   INDF
@@ -38,8 +43,8 @@ fastnet.send:
     bsf     out         ; > 1
     movlw   0x08
     movwf   index
-    pagesel fastnet.send
-fastnet.send_0:
+    pagesel serial.out
+serial.out_0:
     bcf     out         ; > 0 (start DATA)
     nop
     rrf     packet, F
@@ -49,7 +54,7 @@ fastnet.send_0:
     nop
     bsf     out         ; > 1
     decfsz  index, F
-    goto    fastnet.send_0
+    goto    serial.out_0
     nop
     bcf     out         ; > 0 (start PARITY)
     goto    $+1
