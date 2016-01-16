@@ -1,0 +1,38 @@
+Concept: Check for collisions by indicating the required switches for collision checks.
+
+(V) ----A------------- (I)
+         \
+          B----------- (II)
+           \
+  |--(VI)---C
+             \
+              D------- (III)
+               \
+  |--(VII)------E----- (IV)
+
+Example requirement codes:
+
+   I-V   > 00001
+ III-V   > 01111
+  IV-VII > 10000
+
+There are at most 3 parallel sequences. Whenever a new sequence is to be added, all the existing ones must be checked for collisions.
+This collision check can be performed by the folling indicator:
+
+  C(x, y) = ((x * y) ≠ 0)
+
+Any existing sequence must be cleared if it would collide with the new one.
+After removing all colliders, the new sequence can be stored into any unused slot.
+
+Each sequence slot is also decorated with a proto-code slot. This slot holds a partial code encoding the actual sequence.
+
+
+
+
+main 9
+loc  5
+rel  4
+
+9 * 5 * 4 = 9 * 20 = 180  (theoretically OK)
+
+

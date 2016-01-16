@@ -1,0 +1,21 @@
+void decompress(int* params) {
+    int W = 0; // working registry
+    int index = params[0];
+    int value = params[1];
+    int* target_loc = params[2];
+    int* factor_loc = params[3];
+    do {
+        int temp = 0;
+        W = *factor_loc;
+        do {
+            temp++;
+            value -= W;
+        } while (value >= 0);
+        temp--;
+        value += W;
+        *target_loc = temp;
+        factor_loc++;
+        target_loc++;
+    } while (--index > 0);
+    return;
+}

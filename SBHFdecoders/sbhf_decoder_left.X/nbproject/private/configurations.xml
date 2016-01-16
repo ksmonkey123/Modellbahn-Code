@@ -3,7 +3,7 @@
   <projectmakefile>Makefile</projectmakefile>
   <defaultConf>0</defaultConf>
   <confs>
-    <conf name="default" type="3">
+    <conf name="default" type="2">
       <platformToolSN></platformToolSN>
       <languageToolchainDir>/Applications/microchip/mplabx/v3.20/mpasmx</languageToolchainDir>
       <mdbdebugger version="1">
