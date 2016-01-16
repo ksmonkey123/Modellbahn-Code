@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=light_controller.X
+PROJECTNAME=sbhf_decoder_m1
 
 # Active Configuration
 DEFAULTCONF=default
