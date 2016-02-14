@@ -10,8 +10,8 @@ START_VECTOR    code    0x000
 IRUPT_VECTOR    code    0x004
     retfie
 
-    extern  expansion.write
-    extern  expansion.write.load_tris
+    extern  expansion.out
+    extern  expansion.out.init
     extern  deactivate_specials
     extern  random
     extern  delay
@@ -19,6 +19,7 @@ IRUPT_VECTOR    code    0x004
     extern  led.off
     extern  led.init
     extern  pow2
+    extern  portb.init
 
 MAIN_DATA   udata
 state   res 2
@@ -37,8 +38,8 @@ start:
     movwf   delay_c + 0
     ; i/o setup
     lcall   led.init
-    lcall   expansion.write.load_tris
-    tris    PORTB
+    lcall   portb.init
+    lcall   expansion.out.init
     ; state setup
     banksel state
     clrf    state + 0
@@ -47,7 +48,7 @@ start:
 main:
     movlw   state
     movwf   FSR
-    lcall   expansion.write
+    lcall   expansion.out
     movlw   delay_c
     movwf   FSR
     lcall   delay
