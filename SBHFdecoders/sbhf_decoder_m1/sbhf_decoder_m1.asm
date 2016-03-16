@@ -90,7 +90,6 @@ main:
     movwf   FSR
     lcall   delay
     lcall   led.off
-    lgoto   main
     fill    (xorlw 0xff), (0x200 - $)
 
     end
