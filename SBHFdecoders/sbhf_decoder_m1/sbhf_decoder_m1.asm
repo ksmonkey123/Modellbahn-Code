@@ -68,6 +68,8 @@ start:
     movlw   HIGH(delay_settings)
     movwf   delay_config + 1
     lcall   led.on
+    movlw   delay_config
+    movwf   FSR
     lcall   delay
     lcall   led.off
 main:
@@ -90,6 +92,7 @@ main:
     movwf   FSR
     lcall   delay
     lcall   led.off
+    lgoto   main
     fill    (xorlw 0xff), (0x200 - $)
 
     end

@@ -86,7 +86,7 @@ ${OBJECTDIR}/sbhf_decoder_right.o: sbhf_decoder_right.asm  nbproject/Makefile-${
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/sbhf_decoder_right.o.d 
 	@${RM} ${OBJECTDIR}/sbhf_decoder_right.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/sbhf_decoder_right.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/sbhf_decoder_right.lst\\\" -e\\\"${OBJECTDIR}/sbhf_decoder_right.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/sbhf_decoder_right.o\\\" \\\"sbhf_decoder_right.asm\\\" 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/sbhf_decoder_right.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/sbhf_decoder_right.lst\\\" -e\\\"${OBJECTDIR}/sbhf_decoder_right.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/sbhf_decoder_right.o\\\" \\\"sbhf_decoder_right.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/sbhf_decoder_right.o"
 	@${FIXDEPS} "${OBJECTDIR}/sbhf_decoder_right.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
@@ -106,7 +106,7 @@ endif
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 dist/${CND_CONF}/${IMAGE_TYPE}/sbhf_decoder_right.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../../moba_libraries.X/dist/default/debug/moba_libraries.X.lib  
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 -z__MPLAB_DEBUGGER_PK3=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/sbhf_decoder_right.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}   ../../moba_libraries.X/dist/default/debug/moba_libraries.X.lib  
+	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 -z__MPLAB_DEBUGGER_SIMULATOR=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/sbhf_decoder_right.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}   ../../moba_libraries.X/dist/default/debug/moba_libraries.X.lib  
 else
 dist/${CND_CONF}/${IMAGE_TYPE}/sbhf_decoder_right.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../../moba_libraries.X/dist/default/production/moba_libraries.X.lib 
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
