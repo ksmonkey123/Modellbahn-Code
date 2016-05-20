@@ -86,7 +86,7 @@ ${OBJECTDIR}/light_controller.o: light_controller.asm  nbproject/Makefile-${CND_
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/light_controller.o.d 
 	@${RM} ${OBJECTDIR}/light_controller.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/light_controller.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/light_controller.lst\\\" -e\\\"${OBJECTDIR}/light_controller.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/light_controller.o\\\" \\\"light_controller.asm\\\" 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/light_controller.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/light_controller.lst\\\" -e\\\"${OBJECTDIR}/light_controller.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/light_controller.o\\\" \\\"light_controller.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/light_controller.o"
 	@${FIXDEPS} "${OBJECTDIR}/light_controller.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
@@ -106,7 +106,7 @@ endif
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 dist/${CND_CONF}/${IMAGE_TYPE}/light_controller.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../moba_libraries.X/dist/default/debug/moba_libraries.X.lib  
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 -z__MPLAB_DEBUGGER_SIMULATOR=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/light_controller.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}   ../moba_libraries.X/dist/default/debug/moba_libraries.X.lib  
+	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 -z__MPLAB_DEBUGGER_PK3=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/light_controller.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}   ../moba_libraries.X/dist/default/debug/moba_libraries.X.lib  
 else
 dist/${CND_CONF}/${IMAGE_TYPE}/light_controller.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../moba_libraries.X/dist/default/production/moba_libraries.X.lib 
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
