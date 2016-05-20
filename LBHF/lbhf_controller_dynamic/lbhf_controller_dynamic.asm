@@ -29,7 +29,7 @@ IRUPT_VECTOR    code    0x004
     extern  expansion.out, expansion.out.init
     extern  serial.out, serial.out.init
     extern  deactivate_specials
-    extern  led.on, led.off, led.init
+;    extern  led.on, led.off, led.init
     extern  portb.init
     extern  count_ones
     extern  _global_0, _global_1
@@ -55,7 +55,7 @@ start:
     lcall   serial.out.init
     lcall   expansion.out.init
     lcall   expansion.in.init
-    lcall   led.init
+;    lcall   led.init
     banksel input
     clrf    input + 0
     clrf    input + 1
@@ -250,7 +250,7 @@ process_set_C4:
     banksel matrix_candidate
     iorlw   b'01001000' ; proto-command mixed with directional data
     movwf   matrix_candidate + 1
-    movlw   b'000010' ; mask
+    movlw   b'000001' ; mask
     movwf   matrix_candidate + 0
     movlw   b'10000000' ; outbound exit leds
     btfsc   matrix_candidate + 1, 7
@@ -316,13 +316,16 @@ apply_matrix_change_colliders:
     movf    INDF, W
     andwf   matrix_candidate + 0, W
     btfsc   STATUS, Z
-    goto    $+7
+    goto    $+8
     movlw   4
     movwf   _global_1
     clrf    INDF
     incf    FSR, F
     decfsz  _global_1, F
     goto    $-3
+    goto    $+3
+    movlw   4
+    addwf   FSR, F
     decfsz  _global_0, F
     goto    apply_matrix_change_colliders
     ; insert candidate into first empty row
