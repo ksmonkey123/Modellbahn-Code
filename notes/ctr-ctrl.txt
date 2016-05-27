@@ -1,0 +1,19 @@
+A ---------------- C > RBHF.I
+    /          \
+    B          D
+    \          /
+     \        /
+      \      /
+       \    /     / > RBHF.II
+        E  F     /
+         \/     G
+          \    /
+           ------H > LBHF
+
+
+Composites:
+===========
+
+(A|B|C|D)-(G|H)
+
+2*4=8 situations
