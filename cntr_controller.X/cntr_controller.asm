@@ -49,21 +49,39 @@ main:
     lcall   expansion.in
     banksel input
     pagesel main
+    
+decorate:
+    movf    input, W
+    andlw   0x30
+    btfss   STATUS, Z
+    goto    validate
+    movf    input, W
+    andlw   0xc0
+    btfsc   STATUS, Z
+    goto    validate
+    movf    input, W
+    andlw   0x03
+    btfss   STATUS, Z
+    bsf     input, 4
+    movf    input, W
+    andlw   0x0c
+    btfss   STATUS, Z
+    bsf     input, 5
 
 validate:
     rlf     input, W
-    andlw   b'10101010'
+    andlw   0xaa
     andwf   input, W
     btfss   STATUS, Z
     goto    publish
 
 process:
     rlf     input, W
-    andlw   b'10101010'
+    andlw   0xaa
     xorlw   0xff
     andwf   output, F
     rrf     input, W
-    andlw   b'01010101'
+    andlw   0x55
     xorlw   0xff
     andwf   output, F
     movf    input, W
