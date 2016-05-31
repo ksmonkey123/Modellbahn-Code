@@ -60,20 +60,13 @@ start:
     iorlw   0x01
     banksel ch_select
     movwf   ch_select
-    ; finish setup and print ch_select via LED (ch_select = 1 -> blink)
+    ; finish setup
     lcall   led.on
     movlw   delay_config
     movwf   FSR
     lcall   delay
     lcall   led.off
-    pagesel main
-    banksel ch_select
-    btfss   ch_select, 0
-    goto    main
-    lcall   delay
-    lcall   led.on
-    lcall   delay
-    lcall   led.off
+    lgoto   main
 main:
     ; read input and extract channel
     movlw   input
