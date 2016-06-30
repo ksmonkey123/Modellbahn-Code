@@ -92,15 +92,24 @@ expansion.in:
     movwf   index
 expansion.read_0:
     decf  index, F
-    bcf	    INDF, a0
-    bcf	    INDF, a1
-    bcf	    INDF, a2
+    movlw   b'11110001'
+    andwf   INDF, F
+;    bcf	    INDF, a0
+;    bcf	    INDF, a1
+;    bcf	    INDF, a2
+    movlw   0x00
     btfsc   index, 0
-    bsf	    INDF, a0
+;    bsf	    INDF, a0
+    iorlw   b'00001000'
     btfsc   index, 1
-    bsf	    INDF, a1
+;    bsf	    INDF, a1
+    iorlw   b'00000100'
     btfsc   index, 2
-    bsf	    INDF, a2
+;    bsf	    INDF, a2
+    iorlw   b'00000010'
+    iorwf   INDF, F
+    nop
+    nop
     bcf	    STATUS, C
     btfss   INDF, d0
     bsf	    STATUS, C

@@ -49,52 +49,29 @@ main:
     lcall   expansion.in
     banksel input
     pagesel main
-    btfss   input + 1, 0
-    goto    decorate
-    ; reset button pressed. Clear all
-    clrf    input
-    clrf    output
     
-decorate:
     movf    input, W
-    andlw   0x30
-    btfss   STATUS, Z
-    goto    validate
-    movf    input, W
-    andlw   0xc0
-    btfsc   STATUS, Z
-    goto    validate
-    movf    input, W
-    andlw   0x03
-    btfss   STATUS, Z
-    bsf     input, 3
-    btfss   STATUS, Z
-    bsf     input, 4
-    btfss   STATUS, Z
-    goto    validate
-    movf    input, W
-    andlw   0x0c
-    btfss   STATUS, Z
-    bsf     input, 1
-    btfss   STATUS, Z
-    bsf     input, 5
-
-validate:
-    rlf     input, W
-    andlw   0xaa
-    andwf   input, W
-    btfss   STATUS, Z
+    movwf   output
+    
     goto    publish
-
-process:
-    rlf     input, W
-    andlw   0xaa
-    xorlw   0xff
-    andwf   output, F
-    rrf     input, W
-    andlw   0x55
-    xorlw   0xff
-    andwf   output, F
+    
+    btfsc   input, 0
+    bcf     output, 1
+    btfsc   input, 1
+    bcf     output, 0
+    btfsc   input, 2
+    bcf     output, 3
+    btfsc   input, 3
+    bcf     output, 2
+    btfsc   input, 4
+    bcf     output, 5
+    btfsc   input, 5
+    bcf     output, 4
+    btfsc   input, 6
+    bcf     output, 7
+    btfsc   input, 7
+    bcf     output, 6
+    
     movf    input, W
     iorwf   output, F
     

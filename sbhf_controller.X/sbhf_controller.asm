@@ -112,6 +112,16 @@ main:
     movlw   buttons
     movwf   FSR
     lcall    expansion.in
+    banksel buttons
+    pagesel main
+    btfss   buttons + 1, 7
+    goto    main_
+    clrf    buttons + 0
+    clrf    buttons + 1
+    clrf    led_states + 0
+    clrf    led_states + 1
+    clrf    command
+main_:    
     ; PROCESS INPUT
     lcall    search_command
     ; COMMIT CHANGES
