@@ -33,10 +33,10 @@ parse:
     addwf   PCL, F
     retlw   b'000000' ;-  0000
     retlw   b'000000' ;A  0001
-    retlw   b'000000' ;B  0010
-    retlw   b'000000' ;C  0011
-    retlw   b'000000' ;D  0100
-    retlw   b'000000' ;E  0101
+    retlw   b'010101' ;B  0010
+    retlw   b'010110' ;C  0011
+    retlw   b'011000' ;D  0100
+    retlw   b'100000' ;E  0101
     retlw   b'000000' ;F  0110
     retlw   b'000000' ;G  0111
     retlw   b'000000' ;H  1000
