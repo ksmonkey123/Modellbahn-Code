@@ -85,6 +85,11 @@ main:
     ; PROCESS INPUT
     pagesel main
     banksel input
+    movlw   0xfe
+    andwf   input, F
+    movlw   0x01
+    andwf   input + 1, W
+    iorwf   input, F
     movf    input, F
     ; no input?
     btfsc   STATUS, Z

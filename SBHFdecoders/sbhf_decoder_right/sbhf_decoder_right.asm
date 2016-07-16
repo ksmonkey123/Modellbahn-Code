@@ -92,6 +92,9 @@ main:
     movwf   FSR
     lcall   delay
     lcall   led.off
+    banksel PORTC
+    movlw   0xff
+    movwf   PORTC
     lgoto   main
     fill    (xorlw 0xff), (0x200 - $)
 

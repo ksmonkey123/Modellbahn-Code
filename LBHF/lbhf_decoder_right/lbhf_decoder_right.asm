@@ -95,6 +95,9 @@ main:
     movwf   FSR
     lcall   delay
     lcall   led.off
+    banksel PORTC
+    movlw   0xff
+    movwf   PORTC
     lgoto   main
     
 ; ============================================================================

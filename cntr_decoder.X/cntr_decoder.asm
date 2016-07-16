@@ -79,12 +79,12 @@ main:
     movlw   0x0f
     andwf   INDF, f
     ; validate channel
-    rrf     INDF, w
-    andwf   INDF, w
-    andlw   0x05
-    pagesel main
-    btfsc   STATUS, Z
-    goto    main        ; channel was invalid (a switch was overdriven)
+;    rrf     INDF, w
+;    andwf   INDF, w
+;    andlw   0x05
+;    pagesel main
+;    btfsc   STATUS, Z
+;    goto    main        ; channel was invalid (a switch was overdriven)
     ; process output
     movfw   INDF
     lcall   switch_control.process
@@ -102,6 +102,9 @@ main:
     movwf   FSR
     lcall   delay
     lcall   led.off
+    banksel PORTC
+    movlw   0xff
+    movwf   PORTC
     lgoto   main
     fill    (xorlw 0xff), (0x200 - $)
     

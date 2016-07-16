@@ -72,6 +72,9 @@ main:
     movwf   FSR
     call    delay
     call    led.off
+    banksel PORTC
+    movlw   0xff
+    movwf   PORTC
     goto    main
     
     fill (xorlw 0xff), (0x200 - $)

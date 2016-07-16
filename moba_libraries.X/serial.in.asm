@@ -3,12 +3,14 @@
     extern  _global_0
     extern  _global_1
     extern  _global_2
+    extern  _global_3
     extern  portb.tris.set
     extern  portb.tris.flush
 
     #define index   _global_0
     #define packet  _global_1
-    #define parity  _global_2
+    #define packet2 _global_2
+    #define parity  _global_3
     #define in_prt  PORTB
     #define in      PORTB, RB7
 
@@ -24,6 +26,7 @@ serial.in.init:
 serial.in:
     banksel in_prt
     pagesel read
+    goto    read_block
 read:
     btfsc   in
     goto    read
@@ -57,4 +60,23 @@ validate: ; current version does not validate checksum. Presence check only
     movfw   packet
     movwf   INDF
     return
+    
+read_block:
+    call    read
+    movf    packet, W
+    movwf   packet2
+    call    read
+    movf    packet, W
+    xorwf   packet2, W
+    btfss   STATUS, Z
+    goto    read_block
+    ; 2 good
+    call    read
+    movf    packet, W
+    xorwf   packet2, W
+    btfss   STATUS, Z
+    goto    read_block
+    ; 3 good -> return
+    return
+    
     end
