@@ -284,147 +284,147 @@ apply_matrix_change_insert
         ; update subroutines
 process_0x11:
     movlw   b'011001'
-    movwf   matrix_candidate + 0
+    movwf   matrix_candidate + 0 ; mask
     movlw   b'00010001'
     btfsc   _global_1, 0
     movlw   b'01010001'
-    movwf   matrix_candidate + 1
+    movwf   matrix_candidate + 1 ; command
     movlw   b'00000010'
     btfsc   _global_1, 0
     movlw   b'00000001'
-    movwf   matrix_candidate + 2
+    movwf   matrix_candidate + 2 ; exit leds
     movlw   b'0001'
     btfsc   _global_1, 0
     movlw   b'0010'
-    movwf   matrix_candidate + 3
+    movwf   matrix_candidate + 3 ; entrance leds
     goto    update
 process_0x12:
     movlw   b'011001'
-    movwf   matrix_candidate + 0
+    movwf   matrix_candidate + 0 ; mask
     movlw   b'00010010'
     btfsc   _global_1, 0
     movlw   b'01010010'
-    movwf   matrix_candidate + 1
+    movwf   matrix_candidate + 1 ; command
     movlw   b'00001000'
     btfsc   _global_1, 0
     movlw   b'00000100'
-    movwf   matrix_candidate + 2
+    movwf   matrix_candidate + 2 ; exit leds
     movlw   b'0001'
     btfsc   _global_1, 0
     movlw   b'0010'
-    movwf   matrix_candidate + 3
+    movwf   matrix_candidate + 3 ; entrance leds
     goto    update
 process_0x14:
     movlw   b'100111'
-    movwf   matrix_candidate + 0
+    movwf   matrix_candidate + 0 ; mask
     movlw   b'00010100'
     btfsc   _global_1, 0
-    movlw   b'01010100'
-    movwf   matrix_candidate + 1
+    movlw   b'11010100'
+    movwf   matrix_candidate + 1 ; command
     movlw   b'00100000'
     btfsc   _global_1, 0
     movlw   b'00010000'
-    movwf   matrix_candidate + 2
+    movwf   matrix_candidate + 2 ; exit leds
     movlw   b'0001'
     btfsc   _global_1, 0
     movlw   b'0010'
-    movwf   matrix_candidate + 3
+    movwf   matrix_candidate + 3 ; entrance leds
     goto    update
 process_0x18:
     movlw   b'100111'
-    movwf   matrix_candidate + 0
+    movwf   matrix_candidate + 0 ; mask
     movlw   b'00011000'
     btfsc   _global_1, 0
-    movlw   b'01011000'
-    movwf   matrix_candidate + 1
+    movlw   b'11011000'
+    movwf   matrix_candidate + 1 ; command
     movlw   b'10000000'
     btfsc   _global_1, 0
     movlw   b'01000000'
-    movwf   matrix_candidate + 2
+    movwf   matrix_candidate + 2 ; exit leds
     movlw   b'0001'
     btfsc   _global_1, 0
     movlw   b'0010'
-    movwf   matrix_candidate + 3
+    movwf   matrix_candidate + 3 ; entrance leds
     goto    update
 process_0x21:
     movlw   b'011110'
-    movwf   matrix_candidate + 0
+    movwf   matrix_candidate + 0 ; mask
     movlw   b'00100001'
     btfsc   _global_1, 0
-    movlw   b'10100001'
-    movwf   matrix_candidate + 1
+    movlw   b'11100001'
+    movwf   matrix_candidate + 1 ; command
     movlw   b'00000010'
     btfsc   _global_1, 0
     movlw   b'00000001'
-    movwf   matrix_candidate + 2
+    movwf   matrix_candidate + 2 ; exit leds
     movlw   b'0100'
     btfsc   _global_1, 0
     movlw   b'1000'
-    movwf   matrix_candidate + 3
+    movwf   matrix_candidate + 3 ; entrance leds
     goto    update
 process_0x22:
     movlw   b'011110'
-    movwf   matrix_candidate + 0
+    movwf   matrix_candidate + 0 ; mask
     movlw   b'00100010'
     btfsc   _global_1, 0
-    movlw   b'10100010'
-    movwf   matrix_candidate + 1
+    movlw   b'11100010'
+    movwf   matrix_candidate + 1 ; command
     movlw   b'00001000'
     btfsc   _global_1, 0
     movlw   b'00000100'
-    movwf   matrix_candidate + 2
+    movwf   matrix_candidate + 2 ; exit leds
     movlw   b'0100'
     btfsc   _global_1, 0
     movlw   b'1000'
-    movwf   matrix_candidate + 3
+    movwf   matrix_candidate + 3 ; entrance leds
     goto    update
 process_0x24:
     movlw   b'100110'
-    movwf   matrix_candidate + 0
+    movwf   matrix_candidate + 0 ; mask
     movlw   b'00100100'
     btfsc   _global_1, 0
     movlw   b'10100100'
-    movwf   matrix_candidate + 1
+    movwf   matrix_candidate + 1 ; command
     movlw   b'00100000'
     btfsc   _global_1, 0
     movlw   b'00010000'
-    movwf   matrix_candidate + 2
+    movwf   matrix_candidate + 2 ; exit leds
     movlw   b'0100'
     btfsc   _global_1, 0
     movlw   b'1000'
-    movwf   matrix_candidate + 3
+    movwf   matrix_candidate + 3 ; entrance leds
     goto    update
 process_0x28:
     movlw   b'100110'
-    movwf   matrix_candidate + 0
+    movwf   matrix_candidate + 0 ; mask
     movlw   b'00101000'
     btfsc   _global_1, 0
     movlw   b'10101000'
-    movwf   matrix_candidate + 1
+    movwf   matrix_candidate + 1 ; command
     movlw   b'10000000'
     btfsc   _global_1, 0
     movlw   b'01000000'
-    movwf   matrix_candidate + 2
+    movwf   matrix_candidate + 2 ; exit leds
     movlw   b'0100'
     btfsc   _global_1, 0
     movlw   b'1000'
-    movwf   matrix_candidate + 3
+    movwf   matrix_candidate + 3 ; entrance leds
     goto    update
-process_0x7f:
+process_0x7f: ; clear inner
     movlw   b'011001'
     movwf   matrix_candidate + 0
     clrf    matrix_candidate + 1
     clrf    matrix_candidate + 2
     clrf    matrix_candidate + 3
     goto    update
-process_0xbf:
+process_0xbf: ; clear outer
     movlw   b'100110'
     movwf   matrix_candidate + 0
     clrf    matrix_candidate + 1
     clrf    matrix_candidate + 2
     clrf    matrix_candidate + 3
     goto    update
-process_0xff:
+process_0xff: ; clear all
     movlw   b'111111'
     movwf   matrix_candidate + 0
     clrf    matrix_candidate + 1

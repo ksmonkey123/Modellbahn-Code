@@ -1,0 +1,26 @@
+8bit output pinout:
+
+<0:3> track exits 1-4
+<4:6> entrance command code
+
+codes
+-----
+0100.0001 => 0000.0001 (01)
+010x.001x => 0000.0010 (02)
+01xx.01xx => 0000.0100 (04)
+01xx.10xx => 0000.1000 (08)
+1100.0001 => 0001.0000 (10)
+110x.001x => 0010.0000 (20)
+11xx.01xx => 0011.0000 (30)
+11xx.10xx => 0100.0000 (40)
+
+concept
+-------
+decode for both cases ignoring [7],
+then zero out the unused nibble.
+compacted codes are:
+
+x100.0001 => 0001.0001 (11)
+x10x.001x => 0010.0010 (22)
+x1xx.01xx => 0011.0100 (34)
+x1xx.10xx => 0100.1000 (48)
