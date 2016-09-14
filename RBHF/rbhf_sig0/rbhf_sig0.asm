@@ -53,7 +53,6 @@ main:
     clrf    outer
     ; set exits
     movf    rbhf, W
-    andlw   0x0f
     btfsc   rbhf, 6
     andlw   0x0c
     btfsc   rbhf, 7
@@ -62,8 +61,10 @@ main:
     movf    rbhf, W
     andlw   b'10101000'
     xorlw   b'00101000'
-    btfsc   STATUS, Z
+    btfss   STATUS, Z
+    goto    $+3
     bsf     exit, 4
+    bcf     exit, 3
     ; determine inner entrance code
     movf    rbhf, W
     andlw   b'01010000'

@@ -91,12 +91,12 @@ PROGRAM_VECTOR  code    0x100
 ; ======================= START OF MAIN PROGRAM =======================
 ; -------------- processor setup and i/o initialisation ---------------
 start:
-    lcall    deactivate_specials
-    lcall    portb.init
-    lcall    serial.out.init
-    lcall    expansion.out.init
-    lcall    expansion.in.init
-    lcall    led.init
+    lcall   deactivate_specials
+    lcall   portb.init
+    lcall   serial.out.init
+    lcall   expansion.out.init
+    lcall   expansion.in.init
+    lcall   led.init
     banksel command
     clrf    command
     clrf    buttons + 0
@@ -105,13 +105,13 @@ start:
     clrf    led_states + 1
     movlw   led_states
     movwf   FSR
-    lcall    expansion.out
+    lcall   expansion.out
 ; ------------------------- main program loop -------------------------
 main:
     ; READ INPUT
     movlw   buttons
     movwf   FSR
-    lcall    expansion.in
+    lcall   expansion.in
     banksel buttons
     pagesel main
     btfss   buttons + 1, 7
@@ -123,28 +123,36 @@ main:
     clrf    command
 main_:    
     ; PROCESS INPUT
-    lcall    search_command
+    lcall   search_command
     ; COMMIT CHANGES
     banksel new_command
-    movfw   new_command
+    movf    new_command, W
     btfsc   STATUS, Z
     goto    main_publish
     movwf   command
-    movfw   buttons + 0
+    movf    buttons + 0, W
     movwf   led_states + 0
-    movfw   buttons + 1
+    movf    buttons + 1, W
     andlw   0x0f
     movwf   led_states + 1
+    ; ADJUST FOR PARTIAL RIGHT EXIT INDICATION
+    btfsc   led_states + 1, 3
+    bsf     led_states + 1, 4
+    bcf     led_states + 1, 3
+    movf    led_states + 0, W
+    andlw   b'00011110'
+    btfss   STATUS, Z
+    bsf     led_states + 1, 3
     ; PUBLISH DATA
 main_publish:
     movlw   led_states
     movwf   FSR
-    lcall    expansion.out
+    lcall   expansion.out
     movlw   command
     movwf   FSR
-    lcall    serial.out
+    lcall   serial.out
     ; REPEAT
-    lgoto    main
+    lgoto   main
 
 ; ======================== END OF MAIN PROGRAM ========================
     fill    (xorlw 0xff), (0x200 - $) ; keep libs out of second quarter
