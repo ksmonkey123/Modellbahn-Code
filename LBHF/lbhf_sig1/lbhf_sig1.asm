@@ -1,5 +1,5 @@
     #include    <p16f527.inc>
-    __config    0x3b4
+    __config    0x3bc
     radix       HEX
 
 ; C<0:3> [DO] entrance main (GRYG [td])
@@ -7,18 +7,9 @@
 ; B<4:6> [DI] entrance code (track no.)
 ; B<7>   [BI] rbhf command bus
 
-;<editor-fold defaultstate="collapsed" desc="base vectors">
-RESET_VECTOR    code    0x3ff
-    goto    0x000
-START_VECTOR    code    0x000
-    lgoto   start
-IRUPT_VECTOR    code    0x004
-    retfie
-;</editor-fold>
 ;<editor-fold defaultstate="collapsed" desc="library imports">
     extern  deactivate_specials
-    extern  serial.in, serial.in.init
-    extern  portb.init
+    extern  serial.in
 ;</editor-fold>
 ;<editor-fold defaultstate="collapsed" desc="ram allocation">
 PROGRAM_RAM udata
@@ -27,12 +18,14 @@ lbhf    res 1
 output  res 1
 ;</editor-fold>
 
-PROGRAM_VECTOR  code
+PROGRAM_VECTOR  code 0x000
 start:
+    movlw   b'11111101' ; wdt ratio 1:32 ≈ 0.5s
+    option
+    clrwdt
     call    deactivate_specials
-    call    portb.init
-    call    serial.in.init
     banksel 0
+    clrwdt  
     ; configure portc for output
     movlw   b'11110010'
     movwf   PORTC
@@ -47,6 +40,7 @@ main:
     swapf   PORTB, W
     andlw   0x07
     movwf   lbhf
+    clrwdt
     ; case selection
     btfsc   STATUS, Z
     goto    handle_off

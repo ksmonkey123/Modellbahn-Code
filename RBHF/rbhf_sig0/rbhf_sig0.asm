@@ -1,5 +1,5 @@
     #include    <p16f527.inc>
-    __config    0x3b4
+    __config    0x3bc
     radix       HEX
 
 ; C<0:4> [DO] exits 1-4 (C<4> is fast mode for track 4 (set w/ C<3>)
@@ -7,47 +7,33 @@
 ; B<4:6> [DO] outer entrance code (track no.)
 ; B<7>   [BI] rbhf command bus
 
-;<editor-fold defaultstate="collapsed" desc="base vectors">
-RESET_VECTOR    code    0x3ff
-    goto    0x000
-START_VECTOR    code    0x000
-    lgoto   start
-IRUPT_VECTOR    code    0x004
-    retfie
-;</editor-fold>
-;<editor-fold defaultstate="collapsed" desc="library imports">
     extern  deactivate_specials
-    extern  serial.in, serial.in.init
-    extern  portb.init
-;</editor-fold>
-;<editor-fold defaultstate="collapsed" desc="ram allocation">
+    extern  serial.in
 PROGRAM_RAM udata
 rbhf    res 1
 exit    res 1
 inner   res 1
 outer   res 1
-;</editor-fold>
 
-PROGRAM_VECTOR  code
+PROGRAM_VECTOR  code 0x000
 start:
+    movlw   b'11111101' ; wdt ratio 1:32 ≈ 0.5s
+    option
+    clrwdt
     call    deactivate_specials
-    call    portb.init
-    call    serial.in.init
     banksel 0
-    ; configure ports
+    clrwdt
     clrf    PORTB
     movlw   0x8f
     tris    PORTB
     clrf    PORTC
     movlw   0x00
     tris    PORTC
-
-main:
-    ; read input
     movlw   rbhf
     movwf   FSR
+main:
     call    serial.in
-    ; prepare registers
+    clrwdt
     clrf    exit
     clrf    inner
     clrf    outer
