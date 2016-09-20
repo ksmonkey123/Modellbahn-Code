@@ -4,8 +4,6 @@
     extern  _global_1
     extern  _global_2
     extern  _global_3
-    extern  portb.tris.set
-    extern  portb.tris.flush
 
     #define index   _global_0
     #define packet  _global_1
@@ -15,14 +13,8 @@
     #define in      PORTB, RB7
 
     global  serial.in
-    global  serial.in.init
 
 SERIAL_IN_VECTOR code
-serial.in.init:
-    movlw   b'10000000'
-    lcall   portb.tris.set
-    lcall   portb.tris.flush
-    return
 serial.in:
     banksel in_prt
     pagesel read

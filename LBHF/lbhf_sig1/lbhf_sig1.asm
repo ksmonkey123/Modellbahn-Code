@@ -3,7 +3,7 @@
     radix       HEX
 
 ; C<0:3> [DO] entrance main (GRYG [td])
-; C<4:7> [DO] entrance aux  (YYGG [cw])
+; C<4:7> [DO] entrance aux  (YYGG [cw]) (driven over PNP, therefore invert I/O)
 ; B<4:6> [DI] entrance code (track no.)
 ; B<7>   [BI] rbhf command bus
 
@@ -34,7 +34,7 @@ start:
     call    serial.in.init
     banksel 0
     ; configure portc for output
-    movlw   b'00000010'
+    movlw   b'11110010'
     movwf   PORTC
     movlw   0x00
     tris    PORTC
@@ -112,6 +112,7 @@ handle_track_4:
     
 publish:
     movf    output, W
+    xorlw   0xf0 ; invert aux for PNP drivers
     movwf   PORTC
     goto    main
     

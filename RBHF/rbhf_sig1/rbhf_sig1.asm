@@ -34,7 +34,7 @@ start:
     call    serial.in.init
     banksel 0
     ; configure ports
-    movlw   b'00000010'
+    movlw   b'11110010'
     movwf   PORTC
     movlw   0x80
     tris    PORTC
@@ -102,6 +102,7 @@ handle_track_4:
     
 publish:
     movf    output, W
+    xorlw   0xf0        ; invert C<4:7> for PNP drivers
     movwf   PORTC
     goto    main
     

@@ -1,9 +1,18 @@
     #include    <p16f527.inc>
-    __config    0x3b4
+    __config    0x3bc
     radix       HEX
-
-; <0:3> track exits 1-4
-; <4:6> entrance command code
+    
+    ; #######################################
+    ; # LEFT EXIT SIGNAL DECODER            #
+    ; #######################################
+    ; # Notes                               #
+    ; #  - watchdog timer is enabled        #
+    ; #  - watchdog ratio is 1:64 (1s)      #
+    ; #######################################
+    ; # I/O configuration                   #
+    ; #  - C<0:3> track exits 1-4           #
+    ; #  - C<4:6> entrance command code     #
+    ; #######################################
     
 ;<editor-fold defaultstate="collapsed" desc="base vectors">
 RESET_VECTOR    code    0x3ff
@@ -15,8 +24,7 @@ IRUPT_VECTOR    code    0x004
 ;</editor-fold>
 ;<editor-fold defaultstate="collapsed" desc="library imports">
     extern  deactivate_specials
-    extern  serial.in, serial.in.init
-    extern  portb.init
+    extern  serial.in
 ;</editor-fold>
 ;<editor-fold defaultstate="collapsed" desc="ram allocation">
 PROGRAM_RAM udata
@@ -27,17 +35,19 @@ output  res 1
 PROGRAM_VECTOR  code
 start:
     call    deactivate_specials
-    call    portb.init
-    call    serial.in.init
-    banksel 0
-    ; configure portc for output
+    ; configure watchdog timer
+    movlw   b'11111110' ; wdt ratio 1:64 ≈ 1s
+    option
+    clrwdt
+    ; configure i/o ports
     clrf    PORTC
     movlw   0x80
     tris    PORTC
 main:
     movlw   input
     movwf   FSR
-    call   serial.in
+    call    serial.in
+    clrwdt
     ; ACTIVE?
     btfsc   input, 6
     goto    $+3
@@ -61,15 +71,15 @@ main:
     clrw
 store:
     ; SELECT DIRECTION
+    btfsc   input, 7 ; [7] = 1 --> inbound
+    andlw   0xf0
+    btfss   input, 7 ; [7] = 0 --> outbound
+    andlw   0x0f
     movwf   output
-    movlw   0xf0 ; [7] = 1 --> inbound
-    btfss   input, 7
-    movlw   0x0f ; [7] = 0 --> outbound
-    andwf   output, F
 publish:
     ; WRITE OUTPUT TO PORTC
     movf    output, W
-    movwf   output
+    movwf   PORTC
     goto    main
 
     end
