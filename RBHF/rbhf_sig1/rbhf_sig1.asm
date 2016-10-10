@@ -1,5 +1,5 @@
     #include    <p16f527.inc>
-    __config    0x3b4
+    __config    0x3bc
     radix       HEX
     
 ; C<0:2> [DO] inner entrance main (GRY [td])
@@ -17,7 +17,7 @@ IRUPT_VECTOR    code    0x004
 ;</editor-fold>
 ;<editor-fold defaultstate="collapsed" desc="library imports">
     extern  deactivate_specials
-    extern  serial.in, serial.in.init
+    extern  serial.in
     extern  portb.init
 ;</editor-fold>
 ;<editor-fold defaultstate="collapsed" desc="ram allocation">
@@ -29,14 +29,16 @@ output  res 1
 
 PROGRAM_VECTOR  code
 start:
+    movlw   b'11111101' ; wdt ratio 1:32 ≈ 0.5s
+    option
+    clrwdt
     call    deactivate_specials
     call    portb.init
-    call    serial.in.init
     banksel 0
     ; configure ports
     movlw   b'11110010'
     movwf   PORTC
-    movlw   0x80
+    movlw   b'00001000' ; C<3> is signal power supply (isolated)
     tris    PORTC
 
 main:
@@ -44,6 +46,7 @@ main:
     movlw   lbhf
     movwf   FSR
     call    serial.in
+    clrwdt
     swapf   PORTB, W
     andlw   0x07
     ; case selection

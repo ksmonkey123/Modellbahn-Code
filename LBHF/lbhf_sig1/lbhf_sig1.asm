@@ -97,7 +97,7 @@ handle_track_4:
     movlw   b'10001000'
     andwf   rbhf, W
     xorlw   b'00001000'
-    movlw   b'00110001'
+    movlw   b'00111001'
     btfsc   STATUS, Z
     movlw   b'11010001'
     btfss   rbhf, 5
