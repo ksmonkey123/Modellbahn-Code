@@ -18,13 +18,16 @@ IRUPT_VECTOR    code    0x004
 ;<editor-fold defaultstate="collapsed" desc="library imports">
     extern  deactivate_specials
     extern  serial.in
-    extern  portb.init
+    extern  delay
 ;</editor-fold>
 ;<editor-fold defaultstate="collapsed" desc="ram allocation">
 PROGRAM_RAM udata
 rbhf    res 1
 lbhf    res 1
 output  res 1
+cache   res 1
+mask    res 1
+delay_config res 2
 ;</editor-fold>
 
 PROGRAM_VECTOR  code
@@ -33,16 +36,23 @@ start:
     option
     clrwdt
     call    deactivate_specials
-    call    portb.init
     banksel 0
     ; configure ports
     movlw   b'11110010'
     movwf   PORTC
     movlw   b'00001000' ; C<3> is signal power supply (isolated)
     tris    PORTC
+    ; setup cache
+    movlw   b'00000010'
+    movwf   cache
+    ; configure delay subroutine
+    movlw   .40
+    movwf   delay_config + 0
+    clrf    delay_config + 1
 
 main:
     ; read inputs
+    clrwdt
     movlw   lbhf
     movwf   FSR
     call    serial.in
@@ -104,9 +114,88 @@ handle_track_4:
     movwf   output
     
 publish:
+    ; determine if a switching action is required
     movf    output, W
-    xorlw   0xf0        ; invert C<4:7> for PNP drivers
+    xorwf   cache, W
+    btfsc   STATUS, Z
+    goto    main ; last value is still ok!
+    movwf   cache
+    
+    ; setup animation delay
+    movlw   delay_config
+    movwf   FSR
+    
+    ; root mask
+    movlw   0x0f
+    movwf   mask
+    movlw   0x0f
+    andwf   cache, W
+    btfss   STATUS, Z
+    clrf    mask
+    ; STEP 1: kill all
+    movf    output, W
+    andwf   mask, W
+    xorlw   0xf0
     movwf   PORTC
+    ; WAIT 400 ms
+    clrwdt
+    call    delay
+    call    delay
+    clrwdt
+    call    delay
+    call    delay
+    clrwdt
+    call    delay
+    call    delay
+    clrwdt
+    call    delay
+    call    delay
+    clrwdt
+    call    delay
+    call    delay
+    clrwdt
+    ; STEP 2: activate core
+    movlw   b'00110011'
+    iorwf   mask, F
+    movf    output, W
+    andwf   mask, W
+    xorlw   0xf0
+    movwf   PORTC
+    ; WAIT 40 ms
+    call    delay
+    clrwdt
+    ; STEP 3: add secondary
+    movlw   b'01111111'
+    iorwf   mask, F
+    movf    output, W
+    andwf   mask, W
+    xorlw   0xf0
+    movwf   PORTC
+    ; WAIT 40 ms
+    call    delay
+    clrwdt
+    ; STEP 3: add secondary
+    movlw   b'11111111'
+    iorwf   mask, F
+    movf    output, W
+    andwf   mask, W
+    xorlw   0xf0
+    movwf   PORTC
+    ; WAIT 200 ms
+    clrwdt
+    call    delay
+    call    delay
+    clrwdt
+    call    delay
+    call    delay
+    call    delay
+    clrwdt
+    
+    ; update cache
+    movf    output, W
+    movwf   cache
+    
     goto    main
+    
     
     end
