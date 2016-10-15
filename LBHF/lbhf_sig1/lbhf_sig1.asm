@@ -46,12 +46,18 @@ start:
 main:
     ; read inputs
     clrwdt
+    swapf   PORTB, W
+    andlw   0x07
+    movwf   lbhf
     movlw   rbhf
     movwf   FSR
     call    serial.in
     swapf   PORTB, W
     andlw   0x07
-    movwf   lbhf
+    xorwf   lbhf, W
+    btfss   STATUS, Z
+    goto    main
+    movf    lbhf, F
     clrwdt
     ; case selection
     btfsc   STATUS, Z
