@@ -1,8 +1,14 @@
     #include    <p16f527.inc>
     __config    0x3b4
     radix       HEX
-    #define delay_settings .2000
-
+    #define delay_settings_short .200
+    #define delay_settings_long  .800
+    
+    
+; LBHF DECODER
+; all code fits in first page (no pagesel required)
+; all files fit in in first bank (no banksel required)
+    
 ;<editor-fold defaultstate="collapsed" desc="base vectors">
 RESET_VECTOR    code    0x3ff
     goto    0x000
@@ -14,21 +20,20 @@ IRUPT_VECTOR    code    0x004
 ;<editor-fold defaultstate="collapsed" desc="library imports">
     extern  deactivate_specials
     extern  led.init, led.on, led.off
-    extern  serial.in, serial.in.init
+    extern  serial.in
     extern  switch_control.process, switch_control.init
-    extern  portb.init
     extern  delay
 ;</editor-fold>
 ;<editor-fold defaultstate="collapsed" desc="ram allocation">
 PROGRAM_RAM udata
-input           res 1
-delay_config    res 2
+input               res 1
+delay_config_short  res 2
+delay_config_long   res 2
 ;</editor-fold>
 
-SUBROUTINE_VEC  code    0x010
+SUBROUTINE_VEC  code    ;0x010
 parse:
     ; parses the command
-    banksel input
     btfss   input, 6 ; nothing?
     retlw   b'0000'
     btfsc   input, 3 ; track 4?
@@ -37,57 +42,63 @@ parse:
     retlw   b'0110'
     retlw   b'1010'  ; default
 
-PROGRAM_VECTOR  code    0x100
+PROGRAM_VECTOR  code    ;0x100
 start:
-    lcall   deactivate_specials
-    lcall   portb.init
-    lcall   serial.in.init
-    lcall   led.init
-    lcall   switch_control.init
+    call    deactivate_specials
+    call    led.init
+    call    switch_control.init
+    banksel 0 ; just to be sure (specials uses other banks)
     ; configure portc for switch control
-    banksel 0
     movlw   0xff
     movwf   PORTC
     movlw   0xf0
     tris    PORTC
-    banksel delay_config
-    ; configure delay subroutine
-    movlw   LOW(delay_settings)
-    movwf   delay_config + 0
-    movlw   HIGH(delay_settings)
-    movwf   delay_config + 1
-    lcall   led.on
-    movlw   delay_config
+    ; configure short delay
+    movlw   LOW(delay_settings_short)
+    movwf   delay_config_short + 0
+    movlw   HIGH(delay_settings_short)
+    movwf   delay_config_short + 1
+    ; configure long delay
+    movlw   LOW(delay_settings_long)
+    movwf   delay_config_long + 0
+    movlw   HIGH(delay_settings_long)
+    movwf   delay_config_long + 1
+    ; setup complete
+    call    led.on
+    movlw   delay_config_long
     movwf   FSR
-    lcall   delay
-    lcall   led.off
+    call    delay
+    call    led.off
 main:
     movlw   input
     movwf   FSR
-    lcall   serial.in
-    movf    INDF, W
-    lcall   parse
-    lcall   switch_control.process
-    movwf   INDF
-    pagesel main
-    movf    INDF, W
+    call    serial.in
+    movf    input, W
+    call    parse
+    call    switch_control.process
+    movwf   input
+    movf    input, W
     btfsc   STATUS, Z   ; change if any application is required
     goto    main
     xorlw   0xff
-    banksel PORTC
     movwf   PORTC
-    lcall   led.on
-    movlw   delay_config
+    movwf   input   ; cache current output in $input
+    ; short delay
+    call    led.on
+    movlw   delay_config_short
     movwf   FSR
-    lcall   delay
-    lcall   led.off
-    banksel PORTC
+    call    delay
+    ; disable modern drive (no. 2)
+    movf    input, W ; load current output from $input (reading from $PORTC is not save!)
+    iorlw   0xfc     ; disable no. 2 pins
+    movwf   PORTC
+    ; sleep long
+    movlw   delay_config_long
+    movwf   FSR
+    call    led.off
+    ; disable output
     movlw   0xff
     movwf   PORTC
-    lgoto   main
-    
-; ============================================================================
-    
-    fill    (xorlw 0xff), (0x200 - $)
+    goto   main
 
     end

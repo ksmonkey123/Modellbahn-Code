@@ -1,0 +1,6 @@
+UPGRADED DECODERS (modern relays limited to 200ms, old to 2000ms [?])
+#####################################################################
+
+  - sbhf_* (different system, currently no need for upgrade)
+  - lbhf_right (all modern)
+  - lbhf_left (no. 2 is modern)
