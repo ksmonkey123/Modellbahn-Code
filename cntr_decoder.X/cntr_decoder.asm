@@ -1,8 +1,8 @@
     #include    <p16f527.inc>
     __config    0x3b4
     radix       HEX
-    #define     delay_settings  .2000
-    
+    #define     delay_settings_short .200
+    #define     delay_settings_long .1000
     
     ; code for both center decoders. The pcb determines the used channel.
     ;   -> for channel 0 pull RB4 low
@@ -17,16 +17,13 @@ START_VECTOR    code    0x000
 IRUPT_VECTOR    code    0x004
     retfie
 ;</editor-fold>
-
 ;<editor-fold defaultstate="collapsed" desc="library imports">
     extern  deactivate_specials
     extern  led.init, led.on, led.off
-    extern  serial.in, serial.in.init
+    extern  serial.in
     extern  switch_control.process, switch_control.init
-    extern  portb.init
     extern  delay
 ;</editor-fold>
-
 ;<editor-fold defaultstate="collapsed" desc="ram allocation">
 PROGRAM_RAM udata
 input           res 1
@@ -34,78 +31,64 @@ ch_select       res 1
 delay_config    res 2
 ;</editor-fold>
 
-PROGRAM_VECTOR  code    0x100
+PROGRAM_VECTOR  code
 start:
-    lcall   deactivate_specials
-    lcall   portb.init
-    lcall   serial.in.init
-    lcall   led.init
-    lcall   switch_control.init
+    call   deactivate_specials
+    call   led.init
+    call   switch_control.init
     ; configure portc for switch control
     banksel 0
     movlw   0xff
     movwf   PORTC
     movlw   0xf0
     tris    PORTC
-    banksel delay_config
-    ; configure delay subroutine
-    movlw   LOW(delay_settings)
-    movwf   delay_config + 0
-    movlw   HIGH(delay_settings)
-    movwf   delay_config + 1
     ; determine channel to use
-    banksel 0
     movlw   0x00
     btfsc   PORTB, RB4
-    iorlw   0x01
-    banksel ch_select
+    movlw   0x01
     movwf   ch_select
+    ; configure delay subroutine
+    movlw   LOW(delay_settings_long)
+    btfsc   ch_select, 0
+    movlw   LOW(delay_settings_short)
+    movwf   delay_config + 0
+    movlw   HIGH(delay_settings_long)
+    btfsc   ch_select, 0
+    movlw   HIGH(delay_settings_short)
+    movwf   delay_config + 1
     ; finish setup
-    lcall   led.on
+    call    led.on
     movlw   delay_config
     movwf   FSR
-    lcall   delay
-    lcall   led.off
-    lgoto   main
+    call    delay
+    call    led.off
+    goto    main
 main:
-    ; read input and extract channel
+    ; read to $input^
     movlw   input
     movwf   FSR
-    lcall   serial.in
-    movfw   INDF
-    banksel ch_select
+    call    serial.in
+    ; select channel from $input
+    movf    input, w
     btfsc   ch_select, 0
-    swapf   INDF, f
-    movlw   0x0f
-    andwf   INDF, f
-    ; validate channel
-;    rrf     INDF, w
-;    andwf   INDF, w
-;    andlw   0x05
-;    pagesel main
-;    btfsc   STATUS, Z
-;    goto    main        ; channel was invalid (a switch was overdriven)
-    ; process output
-    movfw   INDF
-    lcall   switch_control.process
-    movwf   INDF
-    pagesel main
-    movfw   INDF
+    swapf   input, w
+    andlw   0x0f
+    ; write output
+    call    switch_control.process
+    movwf   input
+    movf    input, W
     btfsc   STATUS, Z
     goto    main        ; channel was unaltered
     ; apply output
     xorlw   0xff
-    banksel PORTC
     movwf   PORTC
-    lcall   led.on
+    call    led.on
     movlw   delay_config
     movwf   FSR
-    lcall   delay
-    lcall   led.off
-    banksel PORTC
+    call    delay
+    call    led.off
     movlw   0xff
     movwf   PORTC
-    lgoto   main
-    fill    (xorlw 0xff), (0x200 - $)
+    goto    main
     
     end

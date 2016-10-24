@@ -1,9 +1,6 @@
 ; #############################################
 ; # READ FUNCTION FOR EXPANSION HEADER REV. A #
 ; #############################################
-; # VERSION                                   #
-; #   1.0.0 (2015-12-13)                      #
-; #############################################
 ; # TARGET HARDWARE                           #
 ; #   - PIC16F527			                  #
 ; #   - MasterBoard Rev. A		              #
@@ -13,9 +10,6 @@
 ; #   expansion.read (main function)	      #
 ; #     reads the 16-bit input on the header  #
 ; #	and stores them at a given location.      #
-; #   expansion.read.load_tris		          #
-; #     returns the tris configuration needed #
-; #     for operation.			              #
 ; #############################################
 ; # DESCRIPTION 			                  #
 ; #   This function handles communication     #
@@ -26,7 +20,7 @@
 ; #   This function assumes RC1, RC2 and RC3  #
 ; #   to be configured as outputs, and RC4    #
 ; #   and RC5 to be configured as inputs.     #
-; #   RC0, RC6 and RC7 are no affected aside  #
+; #   RC0, RC6 and RC7 are not affected aside #
 ; #   from the usual bsf/bcf side-effects.    #
 ; #############################################
 ; # MEMORY CONSIDERATIONS		              #
@@ -43,14 +37,11 @@
 ; #   (T8-T15) will be written into the next  #
 ; #   memory location. At return the FSR will #
 ; #   contain the same value as when calling  #
-; #   the function.                           #
-; #############################################
-; # CHANGELOG                                 #
-; #   1.0.0 - initial release                 #
+; #   the function. On return any bank might  #
+; #   be selected.                            #
 ; #############################################
     #include <p16f527.inc>
     global  expansion.in
-    global  expansion.in.init
 
     #define a0	RA3
     #define a1	RA2
@@ -68,70 +59,53 @@ expansion.read.target	  res 1
     #define value_low	    expansion.read.value_low
     #define value_high	    expansion.read.value_high
     #define target_pointer  expansion.read.target
-
-    extern  portc.tris.set
-    extern  portc.tris.unset
-    extern  portc.tris.flush
-
+    
 EXPANSION_READ_VECTOR CODE
-expansion.in.init:
-    movlw   b'00110000'
-    lcall   portc.tris.set
-    movlw   b'00001110'
-    lcall   portc.tris.unset
-    lcall   portc.tris.flush
-    return
 expansion.in:
     pagesel expansion.in
     banksel target_pointer
-    movfw   FSR
+    movf    FSR, w
     movwf   target_pointer
     movlw   PORTC
     movwf   FSR
     movlw   0x08
     movwf   index
 expansion.read_0:
-    decf  index, F
+    decf  index, f
     movlw   b'11110001'
-    andwf   INDF, F
-;    bcf	    INDF, a0
-;    bcf	    INDF, a1
-;    bcf	    INDF, a2
+    andwf   INDF, f
     movlw   0x00
     btfsc   index, 0
-;    bsf	    INDF, a0
     iorlw   b'00001000'
     btfsc   index, 1
-;    bsf	    INDF, a1
     iorlw   b'00000100'
     btfsc   index, 2
-;    bsf	    INDF, a2
     iorlw   b'00000010'
-    iorwf   INDF, F
+    iorwf   INDF, f
     nop
     nop
     bcf	    STATUS, C
     btfss   INDF, d0
     bsf	    STATUS, C
-    rlf	    value_low, F
+    rlf	    value_low, f
     bcf	    STATUS, C
     btfss   INDF, d1
     bsf	    STATUS, C
-    rlf	    value_high, F
-    movf    index, F
+    rlf	    value_high, f
+    movf    index, f
     btfsc   STATUS, Z
     goto    expansion.read_1
     goto    expansion.read_0
 expansion.read_1:
     ; cleanup & result output
-    movfw   target_pointer
+    movf    target_pointer, w
     movwf   FSR
-    movfw   value_low
+    movf    value_low, w
     movwf   INDF
-    incf    FSR, F
-    movfw   value_high
+    incf    FSR, f
+    movf    value_high, w
     movwf   INDF
-    decf    FSR, F
+    decf    FSR, f
     bcf	    STATUS, C
     return
 

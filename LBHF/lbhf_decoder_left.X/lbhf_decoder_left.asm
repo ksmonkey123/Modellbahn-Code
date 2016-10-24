@@ -5,9 +5,9 @@
     #define delay_settings_long  .800
     
     
-; LBHF DECODER
+; LBHF DECODER LEFT
 ; all code fits in first page (no pagesel required)
-; all files fit in in first bank (no banksel required)
+; all files fit in first bank (no banksel required)
     
 ;<editor-fold defaultstate="collapsed" desc="base vectors">
 RESET_VECTOR    code    0x3ff

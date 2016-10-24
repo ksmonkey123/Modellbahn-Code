@@ -1,8 +1,12 @@
     #include    <p16f527.inc>
     __config    0x3b4
     radix       HEX
-    #define     delay_settings  .2000
-    
+    #define     delay_settings_short .200
+    #define     delay_settings_long  .800
+
+; RBHF DECODER RIGHT
+; all code fits in first page
+; all files fit in first bank
 ;<editor-fold defaultstate="collapsed" desc="base vectors">
 RESET_VECTOR    code    0x3ff
     goto    0x000
@@ -14,25 +18,22 @@ IRUPT_VECTOR    code    0x004
 ;<editor-fold defaultstate="collapsed" desc="library imports">
     extern  deactivate_specials
     extern  led.init, led.on, led.off
-    extern  serial.in, serial.in.init
+    extern  serial.in
     extern  switch_control.process, switch_control.init
-    extern  portb.init
     extern  delay
 ;</editor-fold>
 ;<editor-fold defaultstate="collapsed" desc="ram allocation">
 PROGRAM_RAM udata
-input           res 1
-delay_config    res 2
-temp            res 1
-cmd             res 1
+input               res 1
+temp                res 1
+cmd                 res 1
+delay_config_short  res 2
+delay_config_long   res 2
 ;</editor-fold>
 
-PROGRAM_VECTOR  code    0x100
+PROGRAM_VECTOR  code
 start:
-    pagesel $
     call    deactivate_specials
-    call    portb.init
-    call    serial.in.init
     call    led.init
     call    switch_control.init
     ; configure portc for switch control
@@ -41,14 +42,18 @@ start:
     movwf   PORTC
     movlw   0xc0
     tris    PORTC
-    banksel delay_config
-    ;configure delay subroutine
-    movlw   LOW(delay_settings)
-    movwf   delay_config + 0
-    movlw   HIGH(delay_settings)
-    movwf   delay_config + 1
+    ;configure short delay
+    movlw   LOW(delay_settings_short)
+    movwf   delay_config_short + 0
+    movlw   HIGH(delay_settings_short)
+    movwf   delay_config_short + 1
+    ;configure long delay
+    movlw   LOW(delay_settings_long)
+    movwf   delay_config_long + 0
+    movlw   HIGH(delay_settings_long)
+    movwf   delay_config_long + 1
     call    led.on
-    movlw   delay_config
+    movlw   delay_config_short
     movwf   FSR
     call    delay
     call    led.off
@@ -60,28 +65,33 @@ main:
     movf    INDF, W
     call    parse
     call    switch_control.process
-    movwf   INDF
-    movf    INDF, W
-    btfsc   STATUS, Z
+    movwf   input
+    movf    input, W
+    btfsc   STATUS, Z ; check if any application is required
     goto    main
     xorlw   0xff
-    banksel PORTC
     movwf   PORTC
+    movwf   input ; cache current output in $input
+    ; short delay
     call    led.on
-    movlw   delay_config
+    movlw   delay_config_short
     movwf   FSR
     call    delay
+    ; disable modern drive (no. 3)
+    movf    input, W ; load current output from $input
+    iorlw   0xf0 ; disable no. 3 pins
+    movwf   PORTC
+    ; sleep long
+    movlw   delay_config_long
+    movwf   FSR
     call    led.off
-    banksel PORTC
+    ; disable
     movlw   0xff
     movwf   PORTC
     goto    main
     
-    fill (xorlw 0xff), (0x200 - $)
-    
-PARSE_VEC   code    0x010
+PARSE_VEC code
 parse:
-    banksel temp
     movwf   temp
     clrf    cmd
     btfsc   temp, 5

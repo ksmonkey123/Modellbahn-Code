@@ -15,6 +15,7 @@ deactivate_specials:
     banksel INTCON1
     bcf	    INTCON0, GIE
     clrf    INTCON1
+    banksel 0
     return
 
     END

@@ -1,8 +1,6 @@
+
 ; #############################################
 ; # WRITE FUNCTION FOR EXPANSION HEADER REV A #
-; #############################################
-; # VERSION                                   #
-; #   1.0.0 (2015-12-13)		              #
 ; #############################################
 ; # TARGET HARDWARE			                  #
 ; #   - PIC16F527			                  #
@@ -12,10 +10,7 @@
 ; # EXPORTED LABELS			                  #
 ; #   expansion.write (main function)	      #
 ; #     writes a 16-bit value to the output   #
-; #	section of the expansion header	          #
-; #   expansion.write.load_tris		          #
-; #     returns the tris configuration needed #
-; #     for operation.			              #
+; #	    section of the expansion header	      #
 ; #############################################
 ; # DESCRIPTION 			                  #
 ; #   This function handles communication     #
@@ -45,7 +40,6 @@
 ; #############################################
     #include <p16f527.inc>
     global  expansion.out
-    global  expansion.out.init
 
     #define dat	    RB4
     #define clock   RB5
@@ -68,14 +62,6 @@ expansion.write.source_pointer	res 1
     extern  portb.data.flush
 
 EXPANSION_WRITE_VECTOR CODE
-expansion.out.init:
-    movlw   b'01110000'
-    lcall   portb.data.unset
-    lcall   portb.data.flush
-    movlw   b'01110000'
-    lcall   portb.tris.unset
-    lcall   portb.tris.flush
-    return
 expansion.out:
     ; read values into own memory
     banksel value_low

@@ -1,15 +1,49 @@
     #include <p16f527.inc>
 
+; #############################################
+; # SERIAL BROADCAST SENDER FUNCTION          #
+; #############################################
+; # TARGET HARDWARE			                  #
+; #   - PIC16F527			                  #
+; #   - MasterBoard Rev. A		              #
+; #############################################
+; # EXPORTED LABELS			                  #
+; #   serial.out (main function)    	      #
+; #     writes a 16-bit value to the output   #
+; #	section of the expansion header	          #
+; #   expansion.write.load_tris		          #
+; #     returns the tris configuration needed #
+; #     for operation.			              #
+; #############################################
+; # DESCRIPTION 			                  #
+; #   This function handles sending data over #
+; #   the serial bus pin (RB7).               #
+; #############################################
+; # I/O CONSIDERATIONS 			              #
+; #   This function assumes RB7 to be         #
+; #   configured as an output with a default  #
+; #   value of 1. RB4-RB6 are not affected    #
+; #   aside from the usual bcf/bsf side       #
+; #   effects.                                #
+; #############################################
+; # MEMORY CONSIDERATIONS		              #
+; #   This function requires 3 bytes of       #
+; #   global RAM. bank/page-handling is       #
+; #   is present. on return bank 0 is         #
+; #   selected. No stack levels are needed.   #
+; #############################################
+; # FUNCTION CALL / RETURN CONTRACT	          #
+; #   This function assumes FSR to contain    #
+; #   the adress for the data byte.           #
+; #   - FSR will not be modified              #
+; #   - bank 0 will is selected on return     #
+; #############################################
+    
     global  serial.out
-    global  serial.out.init
 
     extern  _global_0
     extern  _global_1
     extern  _global_2
-    extern  portb.tris.unset
-    extern  portb.tris.flush
-    extern  portb.data.set
-    extern  portb.data.flush
 
     #define packet  _global_0
     #define parity  _global_1
@@ -18,14 +52,6 @@
     #define out_prt PORTB
 
 SERIAL_OUT_VECTOR  code
-serial.out.init:
-    movlw   b'10000000'         ; make sure a 1 is written
-    lcall   portb.data.set
-    lcall   portb.data.flush
-    movlw   b'10000000'         ; make sure the pin is output
-    lcall   portb.tris.unset
-    lcall   portb.tris.flush
-    return
 serial.out:
     banksel out_prt
     bcf     out         ; > 0 (start RESET)
