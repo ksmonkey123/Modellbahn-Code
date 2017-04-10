@@ -41,6 +41,7 @@ output  res 2
 command res 1
 dircache res 1
 temp    res 1
+pled    res 2
 MATRIX_MEMORY   udata
 matrix_candidate res 4
 matrix  res .12
@@ -362,5 +363,71 @@ apply_matrix_change_insert:
     movf    matrix_candidate + 3, W
     movwf   INDF
     return
+    
+decode_lights:
+    movf    command, W
+    andlw   0x07
+    call    led_table_1
+    movwf   output + 0
+    movwf   output + 1
+    movlw   0x0f
+    andwf   output + 0, F
+    swapf   output + 1, F
+    andwf   output + 1, F
+    swapf   command, W
+    movwf   pled + 0
+    rrf     pled + 0, F
+    rrf     pled + 0, W
+    andlw   0x03
+    call    led_table_2
+    movwf   pled + 0
+    rrf     command, W
+    movwf   pled + 1
+    swapf   pled + 1, W
+    andlw   0x03
+    call    led_table_3
+    movwf   pled + 1
+    movf    pled + 0, F
+    btfsc   STATUS, Z
+    goto    decode_lights_0
+    movlw   0xf0
+    andwf   pled+1, W
+    andlw   0x30
+    iorwf   output + 1, F
+decode_lights_0:
+    movlw   0x0f
+    andwf   pled+1, F
+    swapf   pled+1, W
+    iorwf   pled+1, W
+    andwf   pled+0, W
+    iorwf   output + 0, F
+    return
+
+led_table_1:
+    addwf   PCL, F
+    retlw   0x00
+    retlw   0x33
+    retlw   0xcc
+    retlw   0xff
+    retlw   0x00
+    retlw   0x33
+    retlw   0xf3
+    retlw   0x00
+led_table_2:
+    addwf   PCL, F
+    retlw   0x00
+    retlw   0x03
+    retlw   0x0c
+    retlw   0x30
+    retlw   0xc0
+    retlw   0x00
+    retlw   0x00
+    retlw   0x00
+led_table_3:
+    addwf   PCL, F
+    retlw   0x1a
+    retlw   0x3f
+    retlw   0x25
+    retlw   0x00
 
     END

@@ -57,6 +57,8 @@ main:
     movwf   FSR
     call    serial.in
     clrwdt
+    andlw   0xc7
+    andwf   INDF, f
     swapf   PORTB, W
     andlw   0x07
     ; case selection
@@ -77,7 +79,7 @@ handle_off:
     
 handle_track_1:
     movf    lbhf, W
-    xorlw   b'01000001'
+    xorlw   b'10000001'
     movlw   b'00110101'
     btfsc   STATUS, Z
     movlw   b'01010101'
@@ -86,8 +88,7 @@ handle_track_1:
     
 handle_track_2:
     movf    lbhf, W
-    andlw   b'11101110'
-    xorlw   b'01000010'
+    xorlw   b'10000010'
     movlw   b'00110101'
     btfsc   STATUS, Z
     movlw   b'01010101'
@@ -96,8 +97,7 @@ handle_track_2:
     
 handle_track_3:
     movf    lbhf, W
-    andlw   b'11001100'
-    xorlw   b'01000100'
+    xorlw   b'10000011'
     movlw   b'00110101'
     btfsc   STATUS, Z
     movlw   b'11010101'
@@ -106,8 +106,7 @@ handle_track_3:
     
 handle_track_4:
     movf    lbhf, W
-    andlw   b'11001100'
-    xorlw   b'01001000'
+    xorlw   b'10000100'
     movlw   b'00111001'
     btfsc   STATUS, Z
     movlw   b'11001001'

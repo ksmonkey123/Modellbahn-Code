@@ -43,11 +43,11 @@
     #include <p16f527.inc>
     global  expansion.in
 
-    #define a0	RA3
-    #define a1	RA2
-    #define a2	RA1
-    #define d0	RA4
-    #define d1	RA5
+    #define a0	RC3
+    #define a1	RC2
+    #define a2	RC1
+    #define d0	RC4
+    #define d1	RC5
 
 EXPANSION_READ_DATA	  UDATA
 expansion.read.index	  res 1

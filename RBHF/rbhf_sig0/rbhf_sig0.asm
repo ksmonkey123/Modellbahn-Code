@@ -12,12 +12,12 @@
 PROGRAM_RAM udata
 rbhf    res 1
 exit    res 1
-inner   res 1
-outer   res 1
+enter   res 1
+temp    res 1
 
 PROGRAM_VECTOR  code 0x000
 start:
-    movlw   b'11111101' ; wdt ratio 1:32 ≈ 0.5s
+    movlw   0xfd ; wdt ratio 1:32 ≈ 0.5s
     option
     clrwdt
     call    deactivate_specials
@@ -34,69 +34,72 @@ start:
 main:
     call    serial.in
     clrwdt
-    clrf    exit
-    clrf    inner
-    clrf    outer
-    ; set exits
-    movf    rbhf, W
-    btfsc   rbhf, 6
-    andlw   0x0c
-    btfsc   rbhf, 7
-    andlw   0x03
+    movf    INDF, w
+    call    decode_exit
     movwf   exit
-    movf    rbhf, W
-    andlw   b'10101000'
-    xorlw   b'00101000'
-    btfss   STATUS, Z
-    goto    $+3
-    bsf     exit, 4
-    bcf     exit, 3
-    ; determine inner entrance code
-    movf    rbhf, W
-    andlw   b'01010000'
-    xorlw   b'01010000'
-    btfss   STATUS, Z
-    goto    decode_outer
-    clrw
-    btfsc   rbhf, 3 ; tracks 1 and 2 take precedence over 3 and 4
-    movlw   0x04
-    btfsc   rbhf, 2
+    movf    INDF, w
+    call    decode_enter
+    movwf   enter
+process:
     movlw   0x03
-    btfsc   rbhf, 1
-    movlw   0x02
-    btfsc   rbhf, 0
-    movlw   0x01
-    movwf   inner
-    
-decode_outer:
-    movf    rbhf, W
-    andlw   b'10100000'
-    xorlw   b'10100000'
-    btfss   STATUS, Z
-    goto    publish
-    clrw
-    btfsc   rbhf, 0 ; tracks 3 & 4 take precedence over 1 & 2
-    movlw   0x01
-    btfsc   rbhf, 1
-    movlw   0x02
-    btfsc   rbhf, 2
-    movlw   0x03
-    btfsc   rbhf, 3
-    movlw   0x04
-    movwf   outer
-
-; PUBLISHING
+    btfss   rbhf, 5
+    andwf   exit, f
+    movlw   0x1c
+    btfss   rbhf, 7
+    andwf   exit, f
+    movlw   0x07
+    btfss   rbhf, 4
+    andwf   enter, f
+    movlw   0x70
+    btfss   rbhf, 6
+    andwf   enter, f
 publish:
-    movlw   b'00011111'
-    andwf   exit, F
-    swapf   inner, F
-    rlf     inner, W
-    andlw   b'11100000'
-    iorwf   exit, W
-    movwf   PORTC
-    swapf   outer, W
-    andlw   b'01110000'
+    movf    enter, w
     movwf   PORTB
+    swapf   enter, f
+    rlf     enter, w
+    andlw   0xe0
+    iorwf   exit, w
+    movwf   PORTC
     goto    main
+
+decode_exit:
+    andlw   0x0f
+    addwf   PCL, f
+    retlw   b'00000' ; 0000 => OFF
+    retlw   b'00001' ; 0001 => A-1
+    retlw   b'00010' ; 0010 => A-2
+    retlw   b'00000' ; 0011 => ERROR
+    retlw   b'00100' ; 0100 => B-3
+    retlw   b'00101' ; 0101 => A-1 + B-3
+    retlw   b'00110' ; 0110 => A-2 + B-3
+    retlw   b'00100' ; 0111 => A-3
+    retlw   b'10000' ; 1000 => B-4
+    retlw   b'10001' ; 1001 => A-1 + B-4
+    retlw   b'10010' ; 1010 => A-2 + B-4
+    retlw   b'01000' ; 1011 => A-4
+    retlw   b'00000' ; 1100 => ERROR
+    retlw   b'00001' ; 1101 => B-1
+    retlw   b'00010' ; 1110 => B-2
+    retlw   b'00000' ; 1111 => ERROR
+decode_enter:
+    andlw   0x0f
+    addwf   PCL, f
+    retlw   0x00 ; 0000 => OFF
+    retlw   0x01 ; 0001 => A-1
+    retlw   0x02 ; 0010 => A-2
+    retlw   0x00 ; 0011 => ERROR
+    retlw   0x30 ; 0100 => B-3
+    retlw   0x31 ; 0101 => A-1 + B-3
+    retlw   0x32 ; 0110 => A-2 + B-3
+    retlw   0x03 ; 0111 => A-3
+    retlw   0x40 ; 1000 => B-4
+    retlw   0x41 ; 1001 => A-1 + B-4
+    retlw   0x42 ; 1010 => A-2 + B-4
+    retlw   0x04 ; 1011 => A-4
+    retlw   0x00 ; 1100 => ERROR
+    retlw   0x10 ; 1101 => B-1
+    retlw   0x20 ; 1110 => B-2
+    retlw   0x00 ; 1111 => ERROR
 
     end

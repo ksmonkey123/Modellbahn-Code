@@ -15,9 +15,8 @@ IRUPT_VECTOR    code    0x004
 ;<editor-fold defaultstate="collapsed" desc="library imports">
     extern  deactivate_specials
     extern  led.init, led.on, led.off
-    extern  serial.in, serial.in.init
+    extern  serial.in
     extern  switch_control.process, switch_control.init
-    extern  portb.init
     extern  delay
 ;</editor-fold>
 
@@ -51,8 +50,6 @@ parse:
 PROGRAM_VECTOR  code    0x100
 start:
     lcall   deactivate_specials
-    lcall   portb.init
-    lcall   serial.in.init
     lcall   led.init
     lcall   switch_control.init
     ; configure portc for switch control

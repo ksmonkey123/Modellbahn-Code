@@ -1,4 +1,3 @@
-
 ; #############################################
 ; # WRITE FUNCTION FOR EXPANSION HEADER REV A #
 ; #############################################
@@ -55,11 +54,6 @@ expansion.write.source_pointer	res 1
     #define value_low	    expansion.write.value_low
     #define value_high	    expansion.write.value_high
     #define source_pointer  expansion.write.source_pointer
-
-    extern  portb.tris.unset
-    extern  portb.tris.flush
-    extern  portb.data.unset
-    extern  portb.data.flush
 
 EXPANSION_WRITE_VECTOR CODE
 expansion.out:

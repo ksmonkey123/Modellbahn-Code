@@ -92,37 +92,23 @@ main:
     
 PARSE_VEC code
 parse:
-    movwf   temp
-    clrf    cmd
-    btfsc   temp, 5
-    bsf     cmd, 2
-    movf    temp, W
-    andlw   0x0c
-    btfsc   STATUS, Z
-    goto    parse_
-    bsf     cmd, 4
-    btfss   temp, 4
-    goto    parse_
-    btfsc   temp, 5
-    goto    parse_
-    movlw   0x0a
-    iorwf   cmd, F
-parse_:
-    movf    temp, W
-    andlw   0x03
-    btfss   STATUS, Z
-    goto    $+3
-    movf    cmd, W
-    return
-    btfss   temp, 4
-    goto    parse__
-    movf    cmd, W
-    iorlw   0x01
-    return
-parse__:
-    btfsc   temp, 5
-    bsf     cmd, 5
-    movf    cmd, W
-    return
+    andlw   0x0f
+    addwf   PCL, f
+    retlw   b'000000' ; 0000 => OFF
+    retlw   b'000001' ; 0001 => A-1
+    retlw   b'000001' ; 0010 => A-2
+    retlw   b'000000' ; 0011 => ERROR
+    retlw   b'010100' ; 0100 => B-3
+    retlw   b'010101' ; 0101 => A-1 + B-3
+    retlw   b'010101' ; 0110 => A-2 + B-3
+    retlw   b'011010' ; 0111 => A-3
+    retlw   b'010100' ; 1000 => B-4
+    retlw   b'010101' ; 1001 => A-1 + B-4
+    retlw   b'010101' ; 1010 => A-2 + B-4
+    retlw   b'011010' ; 1011 => A-4
+    retlw   b'000000' ; 1100 => ERROR
+    retlw   b'100100' ; 1101 => B-1
+    retlw   b'100100' ; 1110 => B-2
+    retlw   b'000000' ; 1111 => ERROR
     
     end

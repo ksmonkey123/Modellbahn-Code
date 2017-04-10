@@ -36,37 +36,27 @@ start:
 main:
     call    serial.in
     clrwdt
-    btfsc   input, 6
     goto    process
-    clrf    PORTC
-    goto    main
 process:
     call    resolve
-    btfsc   input, 7 ; [7] = 1 --> inbound
-    andlw   0xf0
-    btfss   input, 7 ; [7] = 0 --> outbound
+    btfss   input, 7 ; [7] = 1 --> outbound
     andlw   0x0f
+    btfss   input, 6 ; [6] = 1 --> inbound
+    andlw   0xf0
     movwf   PORTC
     goto    main
 resolve:
-    movlw   0x0f
+    ; the last 3 bit indicate the main path target
+    movlw   0x07
     andwf   input, W
     addwf   PCL, F
-    retlw   0x00    ; 0000 => OFF
-    retlw   0x11    ; 0001 => 1
-    retlw   0x22    ; 0010 => 2
-    retlw   0x22    ; 0011 => 2 (1 is passive)
-    retlw   0x34    ; 0100 => 3
-    retlw   0x34    ; 0101 => 3 (1 is passive)
-    retlw   0x34    ; 0110 => 3 (2 is passive)
-    retlw   0x34    ; 0111 => 3 (1 & 2 are passive)
-    retlw   0x48    ; 1000 => 4
-    retlw   0x48    ; 1001 => 4 (1 is passive)
-    retlw   0x48    ; 1010 => 4 (2 is passive)
-    retlw   0x48    ; 1011 => 4 (1 & 2 are passive)
-    retlw   0x00    ; 1100 => ERROR
-    retlw   0x00    ; 1101 => ERROR
-    retlw   0x00    ; 1110 => ERROR
-    retlw   0x00    ; 1111 => ERROR
+    retlw   0x00    ; 000 => OFF
+    retlw   0x11    ; 001 => 1
+    retlw   0x22    ; 010 => 2
+    retlw   0x34    ; 011 => 3
+    retlw   0x48    ; 100 => 4
+    retlw   0x00    ; 101 => ERROR
+    retlw   0x00    ; 110 => ERROR
+    retlw   0x00    ; 111 => ERROR
 
     end

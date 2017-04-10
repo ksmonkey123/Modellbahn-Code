@@ -47,10 +47,7 @@ main:
     movwf   FSR
     call    expansion.in
     movf    input, w
-    xorwf   buffer, w
-    xorwf   output, f
-    movf    input, w
-    movwf   buffer
+    movwf   output
     goto    main
     
     end

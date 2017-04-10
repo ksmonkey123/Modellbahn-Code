@@ -33,14 +33,23 @@ delay_config_long   res 2
 
 SUBROUTINE_VEC  code    ;0x010
 parse:
+    ; 001 => 1010
+    ; 010 => 1010
+    ; 011 => 0110
+    ; 100 => 0001
+    
     ; parses the command
-    btfss   input, 6 ; nothing?
-    retlw   b'0000'
-    btfsc   input, 3 ; track 4?
-    retlw   b'0001'
-    btfsc   input, 2 ; track 3?
-    retlw   b'0110'
-    retlw   b'1010'  ; default
+    movf    input, w
+    andlw   0x07
+    addwf   PCL, f
+    retlw   b'0000' ; 000
+    retlw   b'1010' ; 001 - C1
+    retlw   b'1010' ; 010 - C2
+    retlw   b'0110' ; 011 - C3
+    retlw   b'0001' ; 100 - C4
+    retlw   b'0000' ; 101
+    retlw   b'0000' ; 110
+    retlw   b'0000' ; 111
 
 PROGRAM_VECTOR  code    ;0x100
 start:

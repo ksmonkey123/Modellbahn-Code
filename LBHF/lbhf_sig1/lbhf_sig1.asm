@@ -82,9 +82,9 @@ handle_off:
     goto    publish
     
 handle_track_1:
-    movlw   b'01000001'
+    movlw   b'00110011'
     andwf   rbhf, W
-    xorlw   b'00000001'
+    xorlw   b'00100001'
     movlw   b'00110101'
     btfsc   STATUS, Z
     movlw   b'01010101'
@@ -92,9 +92,9 @@ handle_track_1:
     goto    publish
     
 handle_track_2:
-    movlw   b'01000010'
+    movlw   b'00110011'
     andwf   rbhf, W
-    xorlw   b'00000010'
+    xorlw   b'00100010'
     movlw   b'00110101'
     btfsc   STATUS, Z
     movlw   b'01010101'
@@ -102,9 +102,9 @@ handle_track_2:
     goto    publish
     
 handle_track_3:
-    movlw   b'10000100'
+    movlw   b'11001100'
     andwf   rbhf, W
-    xorlw   b'00000100'
+    xorlw   b'10000100'
     movlw   b'00111001'
     btfsc   STATUS, Z
     movlw   b'01011001'
@@ -112,14 +112,16 @@ handle_track_3:
     goto    publish
     
 handle_track_4:
-    movlw   b'10001000'
+    movlw   b'11001100'
     andwf   rbhf, W
-    xorlw   b'00001000'
+    xorlw   b'10001000'
     movlw   b'00111001'
     btfsc   STATUS, Z
-    movlw   b'11010001'
-    btfss   rbhf, 5
-    andlw   b'01111111'
+    movlw   b'01010001'
+    btfss   rbhf, 0
+    iorlw   b'10000000'
+    btfss   rbhf, 1
+    iorlw   b'10000000'
     movwf   output
 publish:
     ; determine if a switching action is required

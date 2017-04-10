@@ -27,28 +27,49 @@ temp            res 1
 
 SUBROUTINE_VEC  code    0x010
 parse:
-    ; parses the command
-    banksel input
-    movlw   0x00
-    btfsc   input, 5 ; B in use?
-    movlw   b'000010'
-    btfsc   input, 1 ; track 2 in use?
-    iorlw   b'000100'
-    btfss   input, 0 ; track 4 in use?
-    goto    $+6
-    btfss   input, 4 ; A in use?
-    goto    $+3
-    iorlw   b'100000'; A in use
-    goto    $+2
-    iorlw   b'011000'; A not in use
-    btfss   input, 6 ; global exit used?
-    return
-    btfsc   input, 2
-    return
-    btfsc   input, 3
-    return
-    iorlw   b'000001'
-    return
+   ; parses the command
+   movlw    0x3b
+   andwf    input, f
+   rrf      input, w
+   andlw    0x1c
+   movwf    temp
+   movf     input, w
+   andlw    0x03
+   iorwf    temp, w
+   addwf    PCL, f
+   retlw    b'000000' ; 0.00.00
+   retlw    b'011001' ; 0.00.01
+   retlw    b'000101' ; 0.00.10
+   retlw    b'000000' ; 0.00.11
+   retlw    b'011010' ; 0.01.00
+   retlw    b'000000' ; 0.01.01
+   retlw    b'000000' ; 0.01.10
+   retlw    b'011010' ; 0.01.11
+   retlw    b'000110' ; 0.10.00
+   retlw    b'000000' ; 0.10.01
+   retlw    b'000000' ; 0.10.10
+   retlw    b'000110' ; 0.10.11
+   retlw    b'000000' ; 0.11.00
+   retlw    b'000000' ; 0.11.01
+   retlw    b'000000' ; 0.11.10
+   retlw    b'000000' ; 0.11.11
+   retlw    b'100000' ; 1.00.00
+   retlw    b'000000' ; 1.00.01
+   retlw    b'100101' ; 1.00.10
+   retlw    b'100000' ; 1.00.11
+   retlw    b'000000' ; 1.01.00
+   retlw    b'000000' ; 1.01.01
+   retlw    b'000000' ; 1.01.10
+   retlw    b'000000' ; 1.01.11
+   retlw    b'100110' ; 1.10.00
+   retlw    b'000000' ; 1.10.01
+   retlw    b'000000' ; 1.10.10
+   retlw    b'100110' ; 1.10.11
+   retlw    b'000000' ; 1.11.00
+   retlw    b'000000' ; 1.11.01
+   retlw    b'000000' ; 1.11.10
+   retlw    b'000000' ; 1.11.11
+    
 
 PROGRAM_VECTOR  code    0x100
 start:
