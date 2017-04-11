@@ -57,7 +57,7 @@ main:
     movwf   FSR
     call    serial.in
     clrwdt
-    andlw   0xc7
+    movlw   0xc7
     andwf   INDF, f
     swapf   PORTB, W
     andlw   0x07

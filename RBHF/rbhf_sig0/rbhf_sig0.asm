@@ -41,16 +41,16 @@ main:
     call    decode_enter
     movwf   enter
 process:
-    movlw   0x03
+    movlw   0x1c
     btfss   rbhf, 5
     andwf   exit, f
-    movlw   0x1c
+    movlw   0x03
     btfss   rbhf, 7
     andwf   exit, f
-    movlw   0x07
+    movlw   0x70
     btfss   rbhf, 4
     andwf   enter, f
-    movlw   0x70
+    movlw   0x07
     btfss   rbhf, 6
     andwf   enter, f
 publish:

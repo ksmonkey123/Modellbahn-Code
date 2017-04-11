@@ -123,6 +123,8 @@ handle_track_4:
     btfss   rbhf, 1
     iorlw   b'10000000'
     movwf   output
+    btfsc   output, 5
+    bcf     output, 7
 publish:
     ; determine if a switching action is required
     movf    output, W

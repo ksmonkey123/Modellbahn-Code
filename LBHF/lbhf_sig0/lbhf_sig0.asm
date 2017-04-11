@@ -40,9 +40,9 @@ main:
 process:
     call    resolve
     btfss   input, 7 ; [7] = 1 --> outbound
-    andlw   0x0f
-    btfss   input, 6 ; [6] = 1 --> inbound
     andlw   0xf0
+    btfss   input, 6 ; [6] = 1 --> inbound
+    andlw   0x0f
     movwf   PORTC
     goto    main
 resolve:
