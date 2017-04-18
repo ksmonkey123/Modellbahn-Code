@@ -12,7 +12,6 @@ START_VECTOR    code    0x000
 IRUPT_VECTOR    code    0x004
     retfie
 ;</editor-fold>
-
 ;<editor-fold defaultstate="collapsed" desc="library imports">
     extern  expansion.in
     extern  expansion.out
@@ -21,18 +20,19 @@ IRUPT_VECTOR    code    0x004
     extern  _global_0
     extern  _global_1
 ;</editor-fold>
-
 ;<editor-fold defaultstate="collapsed" desc="ram allocation">
 PROGRAM_MEMORY  udata
 network res 1
 output  res 2
 spi     res 4
+cache   res 1
 ;</editor-fold>
-
+;<editor-fold defaultstate="collapsed" desc="SPI pin mapping">
 #define SPI_SS   RA5
 #define SPI_CLK  RA4
 #define SPI_MOSI RA2
 #define SPI_MISO RA1
+;</editor-fold>
 
 PROGRAM_VECTOR  code
 start:  
@@ -45,9 +45,12 @@ start:
     clrf    PORTC
     movlw   0xf1
     tris    PORTC
+    clrf    cache
     clrf    output + 0
     clrf    output + 1
     clrf    network
+    movlw   b'01101001'
+    movwf   spi + 0
     movlw   b'00000000'
     movwf   PORTA
     movlw   b'11111101'
@@ -130,18 +133,27 @@ _spi_b_inner:
     xorwf   spi + 0, w
     btfss   STATUS, Z
     goto    spi_clean           ; magic number was wrong > skip data processing
+    ; validate last data byte (short led errors are irrelevant)
+    movf    spi + 3, w
+    xorwf   cache, w
+    btfss   STATUS, Z
+    goto    spi_shift
+    ; data ok, write
     movf    spi + 1, w
     movwf   output + 0
     movf    spi + 2, w
     movwf   output + 1
     movf    spi + 3, w
     movwf   network
-    ; write output
     movlw   output
     movwf   FSR
     call    expansion.out
-    ; wait for SS to go away (SS high)
+    ; store last SPI data
+spi_shift:
+    movf    spi + 3, w
+    movwf   cache
 spi_clean:
+    ; prepare SPI files for next packet
     movlw   b'01101001' ; magic number 0x69
     movwf   spi + 0
     btfss   PORTA, SPI_SS
