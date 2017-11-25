@@ -19,55 +19,55 @@ serial.in:
     banksel in_prt
     pagesel read
     goto    read_block
-read:
-    btfsc   in
+read:           ; wait for reset block (0001) and prepare memory
+    btfsc   in          ; 0
     goto    read
-    movlw   0x09
+    movlw   0x09        ; i = 9
     movwf   index
-    btfsc   in
+    btfsc   in          ; 0
     goto    read
-    clrf    packet
+    clrf    packet      ; packet = 0
     bcf     STATUS, C
-    btfsc   in
+    btfsc   in          ; 0
     goto    read
-    clrf    parity
+    clrf    parity      ; parity = 0
     nop
-    btfss   in
+    btfss   in          ; 1
     goto    read
     nop ; NOTE: PCL update times are broken in simulator! This is correct!
 loop:
-    rrf     packet, F
-    btfsc   in
+    rrf     packet, F   ; roll over to next bit
+    btfsc   in          ; 0
     goto    read
-    decf    index, F
-    movlw   loop
-    btfsc   in
-    bsf     STATUS, C
-    btfsc   STATUS, Z
-    movlw   validate
-    btfsc   in
+    decf    index, F    ; i--
+    movlw   loop        ; program jump to loop head
+    btfsc   in          ; d
+    bsf     STATUS, C   ; set carry bit for next data
+    btfsc   STATUS, Z   ; check if i == 0 (zero flag not touched since decrement
+    movlw   validate    ; program jump to validation
+    btfsc   in          ; 1 --> valid, go to target
     movwf   PCL
-    goto    read
+    goto    read        ; invalid, abort
 validate: ; current version does not validate checksum. Presence check only
-    movfw   packet
+    movfw   packet      ; copy data into target file
     movwf   INDF
     return
     
-read_block:
-    call    read
+read_block:             ; perform multiple reads for error elimination
+    call    read        ; READ 1
     movf    packet, W
     movwf   packet2
-    call    read
+    call    read        ; READ 2
     movf    packet, W
-    xorwf   packet2, W
-    btfss   STATUS, Z
-    goto    read_block
+    xorwf   packet2, W  ; compare packets
+    btfss   STATUS, Z   ; data1 === data2 --> continue
+    goto    read_block  ; not ok, restart
     ; 2 good
-    call    read
+    call    read        ; READ 3
     movf    packet, W
-    xorwf   packet2, W
-    btfss   STATUS, Z
-    goto    read_block
+    xorwf   packet2, W  ; compare packets
+    btfss   STATUS, Z   ; data1 === data2 === data3 --> all good
+    goto    read_block  ; not ok, restart
     ; 3 good -> return
     return
     
