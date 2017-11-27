@@ -32,5 +32,5 @@ nbproject/private/
 /test/nbproject/private/
 /test2/nbproject/private/
 /SBHFdecoders/lbhf_decoder_left_new/nbproject/private/
-*/Makefile-genesis.properties
+./*/Makefile-genesis.properties
 */Makefile-variables.mk
