@@ -59,7 +59,7 @@ start:
     movwf   FSR
     call    expansion.out
     ; wait for SS init
-    btfsc   PORTA, SPI_SS ; SS must be high to start
+    btfsc   PORTA, SPI_SS ; SS must be idle to start
     goto    $-1
 
 main:
@@ -139,15 +139,7 @@ _spi_b_inner:
     btfss   STATUS, Z
     goto    spi_shift
     ; data ok, write
-    movf    spi + 1, w
-    movwf   output + 0
-    movf    spi + 2, w
-    movwf   output + 1
-    movf    spi + 3, w
-    movwf   network
-    movlw   output
-    movwf   FSR
-    call    expansion.out
+    goto    commit
     ; store last SPI data
 spi_shift:
     movf    spi + 3, w
@@ -156,8 +148,38 @@ spi_clean:
     ; prepare SPI files for next packet
     movlw   b'01101001' ; magic number 0x69
     movwf   spi + 0
-    btfss   PORTA, SPI_SS
+    btfss   PORTA, SPI_SS   ; wait for SPI to be released by the master
     goto    $-1
     goto    main
+    
+commit:
+    ; commit SPI data to output busses
+    ; serial output
+    movf    spi + 3, w
+    movwf   network
+    ; check if parallel output has update
+    ; (update is very expensive, avoid if possible)
+    movf    spi + 1, w
+    xorwf   output + 0, w
+    btfsc   STATUS, Z
+    ; update
+    goto    commit_update
+    movf    spi + 2, w
+    xorwf   output + 1, w
+    btfss   STATUS, Z
+    ; don't update
+    goto    spi_shift
+commit_update:
+    ; copy data
+    movf    spi + 1, w
+    movwf   output + 0
+    movf    spi + 2, w
+    movwf   output + 1
+    ; write to bus
+    movlw   output
+    movwf   FSR
+    call    expansion.out
+    ; return to spi routine
+    goto    spi_shift
     
     END
