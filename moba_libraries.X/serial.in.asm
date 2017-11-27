@@ -55,20 +55,21 @@ validate: ; current version does not validate checksum. Presence check only
     
 read_block:             ; perform multiple reads for error elimination
     call    read        ; READ 1
+promote:                ; cache packet (target for retries)
     movf    packet, W
     movwf   packet2
     call    read        ; READ 2
     movf    packet, W
     xorwf   packet2, W  ; compare packets
     btfss   STATUS, Z   ; data1 === data2 --> continue
-    goto    read_block  ; not ok, restart
+    goto    promote     ; not ok, restart
     ; 2 good
     call    read        ; READ 3
     movf    packet, W
     xorwf   packet2, W  ; compare packets
     btfss   STATUS, Z   ; data1 === data2 === data3 --> all good
-    goto    read_block  ; not ok, restart
+    goto    promote     ; not ok, restart
     ; 3 good -> return
-    return
+    return              ; data was already copied into target file by READ 3
     
     end
