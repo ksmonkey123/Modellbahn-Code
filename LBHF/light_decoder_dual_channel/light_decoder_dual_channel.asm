@@ -3,7 +3,54 @@
     radix       HEX
     
 ; ================ CHIP ADDRESS ================
-    #DEFINE     ADDRESS     0x00
+    #DEFINE     ADDRESS     0x0
+       
+; ##########################################
+; # DUAL CHANNEL LIGHT DECODER             #
+; ##########################################
+; # Light decoder providing 16 separately  #
+; # controllable digital output pins. The  #
+; # 3-bit device addresses allow the use   #
+; # of up to 8 distinct decoders with up   #
+; # to 128 individually controlled pins.   #
+; # To make interoperation with single     #
+; # channel decoders easier, the address   #
+; # has to be specified as a 4-bit address #
+; # with a constant 0 as the last bit.     #
+; # If two or more decoders have all of    #
+; # their pins 'coupled' (i.e. always      #
+; # controlled identically) they can use   #
+; # the same device address. The output is #
+; # is provided through an expansion board #
+; # as raw digital output. Therefore       #
+; # driver chips are required for safe     #
+; # controlling of any significant         #
+; # components.                            #
+; #                                        #
+; # The 5-bit commands contain a 3-bit     #
+; # pin-pair selection followed by a 2-bit #
+; # data section. The 3 selection bits     #
+; # determine the pin pair to be updated   #
+; # while the data section contains the    #
+; # new data for these 2 pins.             #
+; #                                        #
+; # Single and dual channel decoders can   #
+; # be used together. Dual channel decoders#
+; # simply take up 2 addresses. Therefore  #
+; # when assigning an address to a new     #
+; # dual channel decoder one must ensure   #
+; # that the address does not correspond   #
+; # to the 3 leading bits of any single    #
+; # channel address currently in use. It   #
+; # is recommended to separate dual and    #
+; # single channel decoders into distinct  #
+; # address blocks to avoid collisions.    #
+; ##########################################
+    
+; DATA FORMAT: AAA.PPP.DD
+;  - A: 3-bit address
+;  - P: 3-bit pin-pair selector. a value d identifies pins 2d and 2d+1
+;  - D: 2-bit pin-pair data. Sets the states for the 2 selected pins
     
 ;<editor-fold defaultstate="collapsed" desc="base vectors">
 RESET_VECTOR    code    0x3ff
@@ -24,7 +71,6 @@ IRUPT_VECTOR    code    0x004
 ;<editor-fold defaultstate="collapsed" desc="ram allocation">
 PROGRAM_MEMORY  udata
 input       res 1
-address     res 1
 output      res 2
 mask        res 1
 ;</editor-fold>
@@ -40,9 +86,6 @@ start:
     movlw   0x8f
     tris    PORTB
     ; prepare memory
-    movlw   ADDRESS
-    andlw   0xe0
-    movwf   address
     clrf    input
     clrf    output + 0
     clrf    output + 1
@@ -60,7 +103,7 @@ read:
     call    serial.in
     movf    input, w
     andlw   0xe0
-    xorwf   address, w
+    xorlw   ((ADDRESS * .16) & 0xe0)
     btfss   STATUS, Z
     goto    read
     ; received valid packet
@@ -73,8 +116,8 @@ read:
     ; clear mutating pins
     call    get_mask
     movwf   mask
-    iorwf   INDF, f
-    xorwf   INDF, f
+    iorwf   INDF, f ; set mutating pins
+    xorwf   INDF, f ; invert mutating pins (turns them off)
     
     ; write new data on cleared bits
     call    get_unmasked
