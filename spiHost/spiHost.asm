@@ -161,12 +161,12 @@ commit:
     ; (update is very expensive, avoid if possible)
     movf    spi + 1, w
     xorwf   output + 0, w
-    btfsc   STATUS, Z
+    btfss   STATUS, Z
     ; update
     goto    commit_update
     movf    spi + 2, w
     xorwf   output + 1, w
-    btfss   STATUS, Z
+    btfsc   STATUS, Z
     ; don't update
     goto    spi_shift
 commit_update:
