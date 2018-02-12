@@ -3,7 +3,7 @@
     radix       HEX
     
 ; ================ CHIP ADDRESS ================
-    #DEFINE     ADDRESS     0x0
+    #DEFINE     ADDRESS     0xf
     
 ; ##########################################
 ; # SINGLE CHANNEL LIGHT DECODER           #
