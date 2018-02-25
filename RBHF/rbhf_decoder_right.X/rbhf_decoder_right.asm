@@ -21,6 +21,7 @@ IRUPT_VECTOR    code    0x004
     extern  serial.in
     extern  switch_control.process, switch_control.init
     extern  delay
+    extern  calibration
 ;</editor-fold>
 ;<editor-fold defaultstate="collapsed" desc="ram allocation">
 PROGRAM_RAM udata
@@ -56,6 +57,7 @@ start:
     movlw   delay_config_short
     movwf   FSR
     call    delay
+    call    calibration
     call    led.off
 
 main:

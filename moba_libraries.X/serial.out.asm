@@ -69,7 +69,7 @@ serial.out:
     bsf     out         ; > 1
     movlw   0x08
     movwf   index
-    pagesel serial.out
+    pagesel serial.out                          ; 0 us
 serial.out_0:
     bcf     out         ; > 0 (start DATA)
     nop
@@ -81,14 +81,14 @@ serial.out_0:
     bsf     out         ; > 1
     decfsz  index, F
     goto    serial.out_0
-    nop
-    bcf     out         ; > 0 (start PARITY)
+    nop                                         ; 96 us
+    bcf     out         ; > 0 (start calibration segment)
     goto    $+1
-    btfsc   parity, 0
-    bsf     out         ; > p
+    nop                                         ; 100 us
+    bsf     out         ; > 0                   ; 101 us
     goto    $+1
-    nop
-    bsf     out         ; > 1
+    nop                                         
+    bsf     out         ; > 1                   ; 105 us
     return
 
     end

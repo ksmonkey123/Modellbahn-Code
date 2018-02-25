@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=specials.asm random.asm led.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm portc_manager.asm portb_manager.asm serial.in.asm serial.out.asm expansion.in.asm expansion.out.asm switch_controlling.asm compress.asm decompress.asm
+SOURCEFILES_QUOTED_IF_SPACED=specials.asm led.asm global_ram.asm delay.asm portb_manager.asm serial.in.asm serial.out.asm expansion.in.asm expansion.out.asm switch_controlling.asm serial.in_RA1.asm calibration.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/portc_manager.o ${OBJECTDIR}/portb_manager.o ${OBJECTDIR}/serial.in.o ${OBJECTDIR}/serial.out.o ${OBJECTDIR}/expansion.in.o ${OBJECTDIR}/expansion.out.o ${OBJECTDIR}/switch_controlling.o ${OBJECTDIR}/compress.o ${OBJECTDIR}/decompress.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/specials.o.d ${OBJECTDIR}/random.o.d ${OBJECTDIR}/led.o.d ${OBJECTDIR}/global_ram.o.d ${OBJECTDIR}/delay.o.d ${OBJECTDIR}/count_ones.o.d ${OBJECTDIR}/binary_logarithm.o.d ${OBJECTDIR}/pow2.o.d ${OBJECTDIR}/portc_manager.o.d ${OBJECTDIR}/portb_manager.o.d ${OBJECTDIR}/serial.in.o.d ${OBJECTDIR}/serial.out.o.d ${OBJECTDIR}/expansion.in.o.d ${OBJECTDIR}/expansion.out.o.d ${OBJECTDIR}/switch_controlling.o.d ${OBJECTDIR}/compress.o.d ${OBJECTDIR}/decompress.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/specials.o ${OBJECTDIR}/led.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/portb_manager.o ${OBJECTDIR}/serial.in.o ${OBJECTDIR}/serial.out.o ${OBJECTDIR}/expansion.in.o ${OBJECTDIR}/expansion.out.o ${OBJECTDIR}/switch_controlling.o ${OBJECTDIR}/serial.in_RA1.o ${OBJECTDIR}/calibration.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/specials.o.d ${OBJECTDIR}/led.o.d ${OBJECTDIR}/global_ram.o.d ${OBJECTDIR}/delay.o.d ${OBJECTDIR}/portb_manager.o.d ${OBJECTDIR}/serial.in.o.d ${OBJECTDIR}/serial.out.o.d ${OBJECTDIR}/expansion.in.o.d ${OBJECTDIR}/expansion.out.o.d ${OBJECTDIR}/switch_controlling.o.d ${OBJECTDIR}/serial.in_RA1.o.d ${OBJECTDIR}/calibration.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/specials.o ${OBJECTDIR}/random.o ${OBJECTDIR}/led.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/count_ones.o ${OBJECTDIR}/binary_logarithm.o ${OBJECTDIR}/pow2.o ${OBJECTDIR}/portc_manager.o ${OBJECTDIR}/portb_manager.o ${OBJECTDIR}/serial.in.o ${OBJECTDIR}/serial.out.o ${OBJECTDIR}/expansion.in.o ${OBJECTDIR}/expansion.out.o ${OBJECTDIR}/switch_controlling.o ${OBJECTDIR}/compress.o ${OBJECTDIR}/decompress.o
+OBJECTFILES=${OBJECTDIR}/specials.o ${OBJECTDIR}/led.o ${OBJECTDIR}/global_ram.o ${OBJECTDIR}/delay.o ${OBJECTDIR}/portb_manager.o ${OBJECTDIR}/serial.in.o ${OBJECTDIR}/serial.out.o ${OBJECTDIR}/expansion.in.o ${OBJECTDIR}/expansion.out.o ${OBJECTDIR}/switch_controlling.o ${OBJECTDIR}/serial.in_RA1.o ${OBJECTDIR}/calibration.o
 
 # Source Files
-SOURCEFILES=specials.asm random.asm led.asm global_ram.asm delay.asm count_ones.asm binary_logarithm.asm pow2.asm portc_manager.asm portb_manager.asm serial.in.asm serial.out.asm expansion.in.asm expansion.out.asm switch_controlling.asm compress.asm decompress.asm
+SOURCEFILES=specials.asm led.asm global_ram.asm delay.asm portb_manager.asm serial.in.asm serial.out.asm expansion.in.asm expansion.out.asm switch_controlling.asm serial.in_RA1.asm calibration.asm
 
 
 CFLAGS=
@@ -90,14 +90,6 @@ ${OBJECTDIR}/specials.o: specials.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/specials.o"
 	@${FIXDEPS} "${OBJECTDIR}/specials.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
-${OBJECTDIR}/random.o: random.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/random.o.d 
-	@${RM} ${OBJECTDIR}/random.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/random.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/random.lst\\\" -e\\\"${OBJECTDIR}/random.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/random.o\\\" \\\"random.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/random.o"
-	@${FIXDEPS} "${OBJECTDIR}/random.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
 ${OBJECTDIR}/led.o: led.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/led.o.d 
@@ -121,38 +113,6 @@ ${OBJECTDIR}/delay.o: delay.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/delay.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/delay.lst\\\" -e\\\"${OBJECTDIR}/delay.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/delay.o\\\" \\\"delay.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/delay.o"
 	@${FIXDEPS} "${OBJECTDIR}/delay.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/count_ones.o: count_ones.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/count_ones.o.d 
-	@${RM} ${OBJECTDIR}/count_ones.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/count_ones.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/count_ones.lst\\\" -e\\\"${OBJECTDIR}/count_ones.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/count_ones.o\\\" \\\"count_ones.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/count_ones.o"
-	@${FIXDEPS} "${OBJECTDIR}/count_ones.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/binary_logarithm.o: binary_logarithm.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/binary_logarithm.o.d 
-	@${RM} ${OBJECTDIR}/binary_logarithm.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/binary_logarithm.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/binary_logarithm.lst\\\" -e\\\"${OBJECTDIR}/binary_logarithm.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/binary_logarithm.o\\\" \\\"binary_logarithm.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/binary_logarithm.o"
-	@${FIXDEPS} "${OBJECTDIR}/binary_logarithm.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/pow2.o: pow2.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/pow2.o.d 
-	@${RM} ${OBJECTDIR}/pow2.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/pow2.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/pow2.lst\\\" -e\\\"${OBJECTDIR}/pow2.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/pow2.o\\\" \\\"pow2.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/pow2.o"
-	@${FIXDEPS} "${OBJECTDIR}/pow2.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/portc_manager.o: portc_manager.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/portc_manager.o.d 
-	@${RM} ${OBJECTDIR}/portc_manager.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/portc_manager.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/portc_manager.lst\\\" -e\\\"${OBJECTDIR}/portc_manager.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/portc_manager.o\\\" \\\"portc_manager.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/portc_manager.o"
-	@${FIXDEPS} "${OBJECTDIR}/portc_manager.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 ${OBJECTDIR}/portb_manager.o: portb_manager.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -202,21 +162,21 @@ ${OBJECTDIR}/switch_controlling.o: switch_controlling.asm  nbproject/Makefile-${
 	@${DEP_GEN} -d "${OBJECTDIR}/switch_controlling.o"
 	@${FIXDEPS} "${OBJECTDIR}/switch_controlling.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
-${OBJECTDIR}/compress.o: compress.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/serial.in_RA1.o: serial.in_RA1.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/compress.o.d 
-	@${RM} ${OBJECTDIR}/compress.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/compress.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/compress.lst\\\" -e\\\"${OBJECTDIR}/compress.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/compress.o\\\" \\\"compress.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/compress.o"
-	@${FIXDEPS} "${OBJECTDIR}/compress.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/serial.in_RA1.o.d 
+	@${RM} ${OBJECTDIR}/serial.in_RA1.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/serial.in_RA1.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/serial.in_RA1.lst\\\" -e\\\"${OBJECTDIR}/serial.in_RA1.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/serial.in_RA1.o\\\" \\\"serial.in_RA1.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/serial.in_RA1.o"
+	@${FIXDEPS} "${OBJECTDIR}/serial.in_RA1.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
-${OBJECTDIR}/decompress.o: decompress.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/calibration.o: calibration.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/decompress.o.d 
-	@${RM} ${OBJECTDIR}/decompress.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/decompress.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/decompress.lst\\\" -e\\\"${OBJECTDIR}/decompress.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/decompress.o\\\" \\\"decompress.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/decompress.o"
-	@${FIXDEPS} "${OBJECTDIR}/decompress.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/calibration.o.d 
+	@${RM} ${OBJECTDIR}/calibration.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/calibration.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_SIMULATOR=1 -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/calibration.lst\\\" -e\\\"${OBJECTDIR}/calibration.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/calibration.o\\\" \\\"calibration.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/calibration.o"
+	@${FIXDEPS} "${OBJECTDIR}/calibration.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 else
 ${OBJECTDIR}/specials.o: specials.asm  nbproject/Makefile-${CND_CONF}.mk
@@ -226,14 +186,6 @@ ${OBJECTDIR}/specials.o: specials.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/specials.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/specials.lst\\\" -e\\\"${OBJECTDIR}/specials.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/specials.o\\\" \\\"specials.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/specials.o"
 	@${FIXDEPS} "${OBJECTDIR}/specials.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/random.o: random.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/random.o.d 
-	@${RM} ${OBJECTDIR}/random.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/random.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/random.lst\\\" -e\\\"${OBJECTDIR}/random.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/random.o\\\" \\\"random.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/random.o"
-	@${FIXDEPS} "${OBJECTDIR}/random.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 ${OBJECTDIR}/led.o: led.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -258,38 +210,6 @@ ${OBJECTDIR}/delay.o: delay.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/delay.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/delay.lst\\\" -e\\\"${OBJECTDIR}/delay.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/delay.o\\\" \\\"delay.asm\\\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/delay.o"
 	@${FIXDEPS} "${OBJECTDIR}/delay.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/count_ones.o: count_ones.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/count_ones.o.d 
-	@${RM} ${OBJECTDIR}/count_ones.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/count_ones.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/count_ones.lst\\\" -e\\\"${OBJECTDIR}/count_ones.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/count_ones.o\\\" \\\"count_ones.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/count_ones.o"
-	@${FIXDEPS} "${OBJECTDIR}/count_ones.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/binary_logarithm.o: binary_logarithm.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/binary_logarithm.o.d 
-	@${RM} ${OBJECTDIR}/binary_logarithm.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/binary_logarithm.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/binary_logarithm.lst\\\" -e\\\"${OBJECTDIR}/binary_logarithm.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/binary_logarithm.o\\\" \\\"binary_logarithm.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/binary_logarithm.o"
-	@${FIXDEPS} "${OBJECTDIR}/binary_logarithm.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/pow2.o: pow2.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/pow2.o.d 
-	@${RM} ${OBJECTDIR}/pow2.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/pow2.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/pow2.lst\\\" -e\\\"${OBJECTDIR}/pow2.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/pow2.o\\\" \\\"pow2.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/pow2.o"
-	@${FIXDEPS} "${OBJECTDIR}/pow2.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
-	
-${OBJECTDIR}/portc_manager.o: portc_manager.asm  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/portc_manager.o.d 
-	@${RM} ${OBJECTDIR}/portc_manager.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/portc_manager.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/portc_manager.lst\\\" -e\\\"${OBJECTDIR}/portc_manager.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/portc_manager.o\\\" \\\"portc_manager.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/portc_manager.o"
-	@${FIXDEPS} "${OBJECTDIR}/portc_manager.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 ${OBJECTDIR}/portb_manager.o: portb_manager.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -339,21 +259,21 @@ ${OBJECTDIR}/switch_controlling.o: switch_controlling.asm  nbproject/Makefile-${
 	@${DEP_GEN} -d "${OBJECTDIR}/switch_controlling.o"
 	@${FIXDEPS} "${OBJECTDIR}/switch_controlling.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
-${OBJECTDIR}/compress.o: compress.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/serial.in_RA1.o: serial.in_RA1.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/compress.o.d 
-	@${RM} ${OBJECTDIR}/compress.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/compress.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/compress.lst\\\" -e\\\"${OBJECTDIR}/compress.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/compress.o\\\" \\\"compress.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/compress.o"
-	@${FIXDEPS} "${OBJECTDIR}/compress.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/serial.in_RA1.o.d 
+	@${RM} ${OBJECTDIR}/serial.in_RA1.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/serial.in_RA1.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/serial.in_RA1.lst\\\" -e\\\"${OBJECTDIR}/serial.in_RA1.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/serial.in_RA1.o\\\" \\\"serial.in_RA1.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/serial.in_RA1.o"
+	@${FIXDEPS} "${OBJECTDIR}/serial.in_RA1.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
-${OBJECTDIR}/decompress.o: decompress.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/calibration.o: calibration.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/decompress.o.d 
-	@${RM} ${OBJECTDIR}/decompress.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/decompress.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/decompress.lst\\\" -e\\\"${OBJECTDIR}/decompress.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/decompress.o\\\" \\\"decompress.asm\\\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/decompress.o"
-	@${FIXDEPS} "${OBJECTDIR}/decompress.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/calibration.o.d 
+	@${RM} ${OBJECTDIR}/calibration.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/calibration.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION) -u  -l\\\"${OBJECTDIR}/calibration.lst\\\" -e\\\"${OBJECTDIR}/calibration.err\\\" $(ASM_OPTIONS)   -o\\\"${OBJECTDIR}/calibration.o\\\" \\\"calibration.asm\\\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/calibration.o"
+	@${FIXDEPS} "${OBJECTDIR}/calibration.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 
