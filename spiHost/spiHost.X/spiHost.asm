@@ -26,6 +26,7 @@ network res 1
 output  res 2
 spi     res 4
 cache   res 1
+counter res 1
 ;</editor-fold>
 ;<editor-fold defaultstate="collapsed" desc="SPI pin mapping">
 #define SPI_SS   RA5
@@ -49,6 +50,8 @@ start:
     clrf    output + 0
     clrf    output + 1
     clrf    network
+    movlw   0xff
+    movwf   counter
     movlw   b'01101001'
     movwf   spi + 0
     movlw   b'00000000'
@@ -61,8 +64,22 @@ start:
     ; wait for SS init
     btfsc   PORTA, SPI_SS ; SS must be idle to start
     goto    $-1
-
+    
 main:
+    decfsz  counter
+    goto _main_body
+    ; too long since last SPI packet. master must be dead
+    
+_handle_timeout:
+    ; write to bus
+    clrf    output + 0
+    clrf    output + 1
+    movlw   output
+    movwf   FSR
+    call    expansion.out
+    movlw   0xff
+    movwf   counter
+_main_body:
     movlw   network
     movwf   FSR
     call    serial.out
@@ -73,6 +90,8 @@ main:
     call    expansion.in ; read button states directly into SPI
     btfsc   PORTA, SPI_SS ; detect SS (low)
     goto    main
+
+; SPI SUBROUTINE
 spi_prep:
     movlw   0x03
     movwf   _global_1
